@@ -67,14 +67,16 @@ const registrUser=asyncHandler( async(req,res)=>{
 //@access publice
 const loginUser=asyncHandler( async(req,res)=>{
     const {email,password}=req.body
+
     if(!email||!password){
         res.status(400)
         throw new Error('Please include all fields')
     }
     //find user with current email from the DB
     const user=await User.findOne({email})
-
-    if(user && (bcrypt.compare(user.password,password))){
+    console.log(password)
+    
+    if(user && (await bcrypt.compare(password,user.password))){
         res.status(200).json({
             _id:user._id,
             name:user.name,

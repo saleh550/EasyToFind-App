@@ -1,15 +1,17 @@
 import {FaUser} from 'react-icons/fa'
 import {FcGoogle} from 'react-icons/fc'
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {useSelector,useDispatch} from 'react-redux'
-import {register} from '../features/auth/authSlice'
+import {register,reset} from '../features/auth/authSlice'
 
 
 function Register(){
 
     const {user,isError,isSuccess,isLoading,message}=useSelector((state)=>state.auth)
     const dispatch=useDispatch()
+    const navigate=useNavigate()
 
     const [formData,setFormData]=useState({
         name:'',
@@ -19,7 +21,19 @@ function Register(){
         phoneNumber:''
     })
     const {name ,email,password,password2,phoneNumber}=formData
-    
+
+
+
+    useEffect(()=>{
+        if(isError){
+            toast.error(message)
+        }
+        if(isSuccess){
+            navigate('/')
+        }
+        
+        dispatch(reset())
+    },[isError,isSuccess,message,dispatch,navigate])
     const onChange=(e)=>{
         setFormData((prevstate)=>({
             ...prevstate,
