@@ -74,7 +74,7 @@ const loginUser=asyncHandler( async(req,res)=>{
     }
     //find user with current email from the DB
     const user=await User.findOne({email})
-    console.log(password)
+    
     
     if(user && (await bcrypt.compare(password,user.password))){
         res.status(200).json({

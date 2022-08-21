@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useState ,useEffect} from 'react'
 import {FaUser,FaSignInAlt} from 'react-icons/fa'
 import {FcGoogle} from 'react-icons/fc'
-import Logo from '../images/barberShop3.png' 
+import Logo from '../images/barberShop3.png'
+import Spinner from '../components/Spinner' 
 import {useSelector,useDispatch} from 'react-redux'
-import {login} from '../features/auth/authSlice'
+import {login,reset} from '../features/auth/authSlice'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
 
 function Login(){
     const [formData,setFormData]=useState({
@@ -13,6 +16,18 @@ function Login(){
     const {email,password}=formData
     const {isLoading,isError,isSuccess,message,user}=useSelector((state)=>state.auth)
     const dispatch=useDispatch()
+    const navigate=useNavigate()
+    
+   
+    useEffect(()=>{
+        if(isError){
+            toast.error(message)
+        }
+        if(isSuccess){
+            navigate('/')
+        }
+        dispatch(reset())
+    },[isError,isSuccess,message,navigate,dispatch])
     const onChange=(e)=>{
         setFormData((prevstate)=>({
             ...prevstate,
@@ -27,14 +42,17 @@ function Login(){
             email,password
         }
         dispatch(login(userData))
-        console.log('submited')
+        console.log('submited') 
     }
     
     const googleSignin=()=>{
         console.log('google')
         
     }
-   
+   if(isLoading){
+    
+    return <Spinner/>
+   }
     return (
         <>
         <div className='log-page'>
