@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL='api/users'
+
+const API_URL='/api/users'
 
 //register user
 const register =async (userData)=>{
@@ -24,6 +25,19 @@ const login =async (userData)=>{
     return response.data
 }
 
+//login user with google
+const loginWithGoogle =async (userData)=>{
+    
+    const response=await axios.post(API_URL+'/google',userData)
+    if(response.data){
+        localStorage.setItem('user',JSON.stringify(response.data))
+    }
+    
+    
+    return response.data
+}
+
+
 //logout user
 const logout= ()=>{
     localStorage.removeItem('user')
@@ -32,6 +46,7 @@ const logout= ()=>{
 const authService={
     register,
     logout,
+    loginWithGoogle,
     login
 }
 

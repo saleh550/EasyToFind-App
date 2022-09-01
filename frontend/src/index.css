@@ -92,7 +92,7 @@ li {
   .form{
     position: static;
     text-align: center;
-    margin: auto 18%;
+    margin: auto 25%;
     
   }
   .form h1{
@@ -109,7 +109,7 @@ li {
     border-top: none;
     border-left: none;
     border-bottom: 1.5px solid rgb(88, 86, 86);
-   margin: auto 0px;
+   margin: 3px 0px;
    width: 100%;
   
 
@@ -151,8 +151,8 @@ li {
     font-family: 'Brush Script MT', cursive;
 
   }
-  .google-icon{
-    font-size: 80px;
+  .google-facebook-login{
+    margin-top: 20px;
   }
   .google-icon:hover{
     font-size: 90px;

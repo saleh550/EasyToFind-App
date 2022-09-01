@@ -9,10 +9,10 @@ function Header(){
     const {user}=useSelector(state=>state.auth)
     const dispatch=useDispatch()
     if(!user){
-        console.log('is null')
+       
     }else{
         
-        console.log(user)
+       
     }
      const onLogout=()=>{
         console.log('onlogout')

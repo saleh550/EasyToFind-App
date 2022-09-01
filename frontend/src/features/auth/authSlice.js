@@ -3,7 +3,7 @@ import authService from './authService'
 
 
 
-const initialState={
+const initialState={ 
     user:null,
     isSuccess:false,
     isError:false,
@@ -50,6 +50,24 @@ export const login=createAsyncThunk(
 
 )
 
+//login user with google
+export const loginWithGoogle=createAsyncThunk(
+    'google/login',
+     async (user,thunkAPI)=>{
+        try {
+            return await authService.loginWithGoogle(user)
+        } catch (error) {
+            const message=(error.response&&error.response.data&&error.response.data.message)
+            ||error.message
+            ||error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+     }
+
+)
+
+
+
 export const authSlice=createSlice({
     name:'auth',
     initialState,
@@ -95,6 +113,21 @@ export const authSlice=createSlice({
                 state.message=action.payload
                 state.user=null
             })
+            .addCase(loginWithGoogle.pending,(state)=>{
+                state.isLoading=true
+            })
+            .addCase(loginWithGoogle.fulfilled,(state,action)=>{
+                state.isLoading=false
+                state.isSuccess=true
+                state.user=action.payload
+            })
+            .addCase(loginWithGoogle.rejected,(state,action)=>{
+                state.isLoading=false
+                state.isError=true
+                state.message=action.payload
+                state.user=null
+            })
+            
     }
 
 

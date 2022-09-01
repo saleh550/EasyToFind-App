@@ -1,31 +1,45 @@
-const mongoose=require('mongoose')
+const mongoose  =require('mongoose')
+var passportLocalMongoose = require("passport-local-mongoose");
+const findOrCreate=require('mongoose-findorcreate')
 
 
 const userSchema=mongoose.Schema({
+    
     name:{
         type:String,
         required:[true,'Please add a name .']
     },
     email:{
         type:String,
-        required:[true,'Please add your email']
+        required:[false,'Please add your email']
 
     },
     password:{
         type:String,
-        required:[true,'Please add your password']
+        required:[false,'Please add your password']
 
     },
     phoneNumber:{
         type:String,
-        required:[true,'Please add a phone number']
+        required:[false,'Please add a phone number']
     },
     isAdmin:{
         type:Boolean,
         required:true,
         default:false
+    },
+    googleId:{
+        type:String,
+        default:null
+    },
+    imageUrl:{
+        type:String,
+        default:null
     }
 
 },{timestamp:true})
+
+userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(findOrCreate);
 
 module.exports=mongoose.model('User',userSchema)

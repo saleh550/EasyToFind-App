@@ -2,10 +2,12 @@ const asyncHandler =require('express-async-handler')
 const bcrypt=require('bcryptjs')
 const jwt=require('JsonWebToken')
 const User=require('../models/userModel')
-const { findOne } = require('../models/userModel')
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const passport=require('passport')
+const { findOne, create } = require('../models/userModel')
 
 
-const generateToken=(id)=>{
+ const generateToken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET,{ 
         expiresIn:'30d'
     })
@@ -13,7 +15,7 @@ const generateToken=(id)=>{
 
 
 
-//@desc register anew user
+//@desc register a new user
 //@route POST /api/users
 //@access publice
 const registrUser=asyncHandler( async(req,res)=>{
@@ -58,7 +60,7 @@ const registrUser=asyncHandler( async(req,res)=>{
         throw new Error('Invalid user data')
     }
 
-    res.send('Register user')
+    
 
 })
 
@@ -101,8 +103,78 @@ const getMe=asyncHandler( async(req,res)=>{
     res.status(200).json(req.user)
 })
 
+//@desc login user with google
+//@route POST /api/users/google
+//@access private
+const loginWithGoogle=asyncHandler( async(req,res)=>{
+    const {email,name,googleId,imageUrl}=req.body
+    console.log(googleId)
+    
+
+    if(!googleId){
+        res.status(400)
+        throw new Error('login with google failed')
+    }else{
+            //find user with current googleId from the DB
+            const user=await User.findOne({googleId:googleId})
+            if(user){
+             res.status(200).json({
+                _id:user._id,
+                name:user.name,
+                isAdmin:user.isAdmin,
+                email:user.email,
+                googleId:user.googleId,
+                phoneNumber:user.phoneNumber,
+                imageUrl:user.imageUrl,
+                token:generateToken(user._id)
+             })
+       
+            }  
+            else{
+               const newUser=await User.create({
+                    email,name,googleId,imageUrl
+                })
+                if(newUser){
+                    res.status(201).json({
+                        _id:newUser._id,
+                        name:newUser.name,
+                        isAdmin:newUser.isAdmin,
+                        email:newUser.email,
+                        googleId:newUser.googleId,
+                        phoneNumber:newUser.phoneNumber,
+                        imageUrl:newUser.imageUrl,
+                        token:generateToken(newUser._id),
+                        created:true
+                    })
+                }
+            //     console.log(newUser)
+            // res.status(200).json(newUser)
+            }
+    }
+   
+    
+    // if(user ){
+    //     res.status(200).json({
+    //         _id:user._id,
+    //         name:user.name,
+    //         isAdmin:user.isAdmin,
+    //         email:user.email,
+    //         password:user.password,
+    //         phoneNumber:user.phoneNumber,
+    //         token:generateToken(user._id)
+    //     })
+    // }else{
+    //     res.status(401)
+    //     throw new Error("Error Login With Google")
+    // }
+
+})
+
+
+
 module.exports={
     registrUser, 
     loginUser,
+    loginWithGoogle,
     getMe
 }

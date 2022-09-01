@@ -4,8 +4,9 @@ import {useState,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {useSelector,useDispatch} from 'react-redux'
-import {register,reset} from '../features/auth/authSlice'
+import {register,reset,loginWithGoogle} from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
+import {GoogleLogin} from 'react-google-login'
 
 
 function Register(){
@@ -57,9 +58,14 @@ function Register(){
         }
        
     }
-    const googleSignin=()=>{
-        console.log('google')
+    const googleRegister=(response)=>{
+        const {googleId,name,email,imageUrl}=response.profileObj
+            const userData={googleId,name,email,imageUrl}
+            dispatch(loginWithGoogle(userData))
         
+    }
+    const googleFailedSignin=()=>{
+        toast.error("Register with google failed ! , try again .")
     }
     if(isLoading){
         return <Spinner/>
@@ -73,7 +79,7 @@ function Register(){
             <form onSubmit={onSubmit}>
             <h1>  התחבר <FaUser/> </h1>
             <div className='form-group'>
-                <p> : שם מלא </p>
+                
                  <input
                     type='text'
                     placeholder='Full Name'
@@ -86,7 +92,7 @@ function Register(){
                  /> 
             </div>
             <div className='form-group'>
-                <p> : שם משתמש </p>
+                
                  <input
                     type='email'
                     placeholder='Email'
@@ -101,7 +107,7 @@ function Register(){
            
             
             <div className='form-group'>
-                <p> : סיסמה </p>
+               
                  <input
                     type='password'
                     placeholder='Password'
@@ -114,10 +120,10 @@ function Register(){
                  /> 
             </div>
             <div className='form-group'>
-                <p> : אמת סיסמה </p>
+                
                  <input
                     type='password'
-                    placeholder='Password'
+                    placeholder='Comfirt Password'
                     id='password2'
                     name='password2'
                     value={password2}
@@ -127,7 +133,6 @@ function Register(){
                  /> 
             </div>
             <div className='form-group'>
-                <p> : מספר נייד </p>
                  <input
                     type='text'
                     placeholder='Phone Number'
@@ -140,9 +145,17 @@ function Register(){
                  /> 
             </div>
             <button className='btn-login' type='submit'>התחבר</button>
-            <p className='p-icon'>התחבר עם </p>
            
-            <FcGoogle onClick={googleSignin} className='google-icon'/>
+            <GoogleLogin
+            className='google-facebook-login'
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            buttonText='Login With Google'
+            onSuccess={googleRegister}
+            onFailure={googleFailedSignin}
+            ></GoogleLogin>
+
+           
+            {/* <FcGoogle onClick={googleSignin} className='google-icon'/> */}
             
             </form>
             </div>

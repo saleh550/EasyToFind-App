@@ -4,11 +4,18 @@ import {FcGoogle} from 'react-icons/fc'
 import Logo from '../images/barberShop3.png'
 import Spinner from '../components/Spinner' 
 import {useSelector,useDispatch} from 'react-redux'
-import {login,reset} from '../features/auth/authSlice'
+import {login,reset,loginWithGoogle,test} from '../features/auth/authSlice'
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
+import GoogleLogin from 'react-google-login'
+import { gapi } from "gapi-script";
+
+
+
+
 
 function Login(){
+    
     const [formData,setFormData]=useState({
         email:'',
         password:''
@@ -20,6 +27,7 @@ function Login(){
     
    
     useEffect(()=>{
+        
         if(isError){
             toast.error(message)
         }
@@ -42,27 +50,39 @@ function Login(){
             email,password
         }
         dispatch(login(userData))
-        console.log('submited') 
+       
     }
     
-    const googleSignin=()=>{
-        console.log('google')
+    const googleSignin=(response)=>{
+
+            const {googleId,name,email,imageUrl}=response.profileObj
+            const userData={googleId,name,email,imageUrl}
+            dispatch(loginWithGoogle(userData))
         
     }
+    const googleFailedSignin=(response)=>{
+        toast.error("login with google failed ! , try again .")
+    }
+    const MyFacebookButton = ({ onClick, styles }) => (
+        <button onClick={onClick} style={styles}>
+          Login with facebook
+        </button>
+      );
    if(isLoading){
     
     return <Spinner/>
    }
     return (
         <>
+        
         <div className='log-page'>
         
-
+    
         <div className='form'>
             <form onSubmit={onSubmit}>
             <h1>  התחבר <FaUser/> </h1>
             <div className='form-group'>
-                <p> : שם משתמש </p>
+              
                  <input
                     type='email'
                     placeholder='Email'
@@ -75,7 +95,7 @@ function Login(){
                  /> 
             </div>
             <div className='form-group'>
-                <p> : סיסמה </p>
+                
                  <input
                     type='password'
                     placeholder='Password'
@@ -88,9 +108,23 @@ function Login(){
                  /> 
             </div>
             <button className='btn-login' type='submit'>התחבר</button>
-            <p className='p-icon'>התחבר עם </p>
+            <GoogleLogin
+            className='google-facebook-login'
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            buttonText='Login With Google'
+            onSuccess={googleSignin}
+            onFailure={googleFailedSignin}
+            ></GoogleLogin>
+
+          
+            
+            
+            
            
-            <FcGoogle onClick={googleSignin} className='google-icon'/>
+           
+            
+            {/* <FcGoogle onClick={googleSignin} className='google-icon'/> */}
+           
             
             </form>
             </div>
