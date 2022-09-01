@@ -147,26 +147,12 @@ const loginWithGoogle=asyncHandler( async(req,res)=>{
                         created:true
                     })
                 }
-            //     console.log(newUser)
-            // res.status(200).json(newUser)
+           
             }
     }
    
     
-    // if(user ){
-    //     res.status(200).json({
-    //         _id:user._id,
-    //         name:user.name,
-    //         isAdmin:user.isAdmin,
-    //         email:user.email,
-    //         password:user.password,
-    //         phoneNumber:user.phoneNumber,
-    //         token:generateToken(user._id)
-    //     })
-    // }else{
-    //     res.status(401)
-    //     throw new Error("Error Login With Google")
-    // }
+   
 
 })
 

@@ -154,8 +154,6 @@ function Register(){
             onFailure={googleFailedSignin}
             ></GoogleLogin>
 
-           
-            {/* <FcGoogle onClick={googleSignin} className='google-icon'/> */}
             
             </form>
             </div>

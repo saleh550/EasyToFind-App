@@ -63,11 +63,6 @@ function Login(){
     const googleFailedSignin=(response)=>{
         toast.error("login with google failed ! , try again .")
     }
-    const MyFacebookButton = ({ onClick, styles }) => (
-        <button onClick={onClick} style={styles}>
-          Login with facebook
-        </button>
-      );
    if(isLoading){
     
     return <Spinner/>
@@ -115,17 +110,6 @@ function Login(){
             onSuccess={googleSignin}
             onFailure={googleFailedSignin}
             ></GoogleLogin>
-
-          
-            
-            
-            
-           
-           
-            
-            {/* <FcGoogle onClick={googleSignin} className='google-icon'/> */}
-           
-            
             </form>
             </div>
 
