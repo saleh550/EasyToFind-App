@@ -6,6 +6,7 @@ import {toast} from 'react-toastify'
 import {useSelector,useDispatch} from 'react-redux'
 import {register,reset,loginWithGoogle} from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
+import Header from '../components/Header'
 import {GoogleLogin} from 'react-google-login'
 
 
@@ -72,6 +73,7 @@ function Register(){
     }
     return (
         <>
+        <Header/>
         <div className='log-page'>
         
 

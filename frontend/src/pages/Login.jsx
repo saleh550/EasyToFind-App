@@ -3,6 +3,7 @@ import {FaUser,FaSignInAlt} from 'react-icons/fa'
 import {FcGoogle} from 'react-icons/fc'
 import Logo from '../images/barberShop3.png'
 import Spinner from '../components/Spinner' 
+import Header from '../components/Header'
 import {useSelector,useDispatch} from 'react-redux'
 import {login,reset,loginWithGoogle,test} from '../features/auth/authSlice'
 import {useNavigate} from 'react-router-dom'
@@ -69,8 +70,8 @@ function Login(){
    }
     return (
         <>
-        
-        <div className='log-page'>
+        <Header/>
+        <div className='container'>
         
     
         <div className='form'>
