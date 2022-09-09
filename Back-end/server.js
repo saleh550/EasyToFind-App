@@ -9,10 +9,15 @@ const {errorHandler}=require('./middleware/errorMiddleware')
 const PORT=process.env.PORT || 5000
 const User=require('./models/userModel');
 const { options } = require('./routes/userRoutes');
+const cors =require("cors")
 
 
 
 const app=express()
+
+
+app.use(cors());
+
 app.use(session({
     secret:'our secret',
     resave:false,
@@ -55,6 +60,7 @@ app.get('/',(req,res)=>{
 
 //Routes
 app.use('/api/users', require('./routes/userRoutes'))
+app.use('/api/maps',require('./routes/palcesRoutes'))
 
 app.use(errorHandler)
 

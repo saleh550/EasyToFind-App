@@ -1,21 +1,40 @@
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import Header from '../components/Header'
 import {AiOutlineSearch} from 'react-icons/ai'
 import {BsScissors} from 'react-icons/bs'
 import PlaceItem from '../components/PlaceItem'
+import coers from 'cors'
+import { useEffect } from 'react'
+import axios from 'axios'
+
+
+
+
 
 
 
 
 function Home(){
+
+  
     const {user}=useSelector(state=>state.auth)
-    // console.log(user.name)
+    const dispatch=useDispatch()
     const navigate=useNavigate()
+  
+
+
+    //fetch places from google maps 
+    const fetchPlaces=async ()=>{
+    const response =await fetch("https://maps.googleapis.com/maps/api/place/textsearch/json?query= barber shop basil&key=AIzaSyBIe2QFVIIH3xniljRlgqJLCB9dhbjtSxg")
+     const data =response.json()
+     console.log(data)
+
+    } 
     return(
         <>
-
-        
+ 
+        <button onClick={fetchPlaces}>fetch</button>
       
            <header className='home-header'>
            <div className='home-profile'>
@@ -64,17 +83,6 @@ function Home(){
            </div>
             </div>
            
-           {/* <div className='container'>
-  <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-3" style={{"backgroundColor":"red"}}>
-      1 of 2
-    </div>
-    <div class="col">
-      2 of 2
-    </div>
-  </div>
-  
-</div> */}
            </>
            
            

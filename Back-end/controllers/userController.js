@@ -108,7 +108,6 @@ const getMe=asyncHandler( async(req,res)=>{
 //@access private
 const loginWithGoogle=asyncHandler( async(req,res)=>{
     const {email,name,googleId,imageUrl}=req.body
-    console.log(googleId)
     
 
     if(!googleId){
