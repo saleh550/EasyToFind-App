@@ -235,6 +235,11 @@ li {
     align-items: center;
     
   }
+  .home-search button{
+   margin-left: 4px;
+
+    
+  }
   .search input{
      outline: none;
     margin-left: 15px;
@@ -283,7 +288,7 @@ li {
   .btn-logout:hover{
     font-size: large;
   }
-  .home-profile img{
+  .profile-img{
    width: 40px;
    height: 40px;
    border-radius: 50%;
@@ -298,10 +303,10 @@ li {
     
   }
   .place-item{
-   
+    border: 1px solid green;
     width: 100%;
     height:300px;
-    background-color: #3f3e3e;
+    background-color: #f6f5f5;
     margin: 30px 5px ;
 
 
@@ -311,6 +316,10 @@ li {
     /* background-color: #0f0f0f; */
     margin:10px 0px;
      /* position: relative; */
+  }
+  .place-item img{
+    width: 100%;
+    height: 200px;
   }
 
   

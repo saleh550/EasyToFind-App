@@ -4,7 +4,7 @@ const {getPlaces}=require('../controllers/placesController')
 
 
 
-router.get('/',getPlaces)
+router.post('/places',getPlaces)
 
 
 
