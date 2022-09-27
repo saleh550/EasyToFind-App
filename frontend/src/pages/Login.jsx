@@ -72,8 +72,6 @@ function Login(){
         <>
         <Header/>
         <div className='container'>
-        
-    
         <div className='form'>
             <form onSubmit={onSubmit}>
             <h1>  התחבר <FaUser/> </h1>

@@ -1,6 +1,6 @@
 function ImagesCarousel({place}){
     return(
-        <>
+        <div className="carousel-image">
             <div
                 id="carouselExampleFade"
                 className="carousel slide carousel-fade"
@@ -30,11 +30,14 @@ function ImagesCarousel({place}){
                 data-bs-target="#carouselExampleFade"
                 data-bs-slide="next"
             >
+       
             <span className="carousel-control-next-icon" aria-hidden="true"></span>
             <span className="visually-hidden"></span>
             </button>
             </div>
-        </>
+           
+            
+        </div>
     )
 }
 export default ImagesCarousel

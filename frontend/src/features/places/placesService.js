@@ -13,8 +13,17 @@ const getPlaces = async(textSearch)=>{
     }
     return response.data
 }
+
+//set specific place in the state
+const setPlace =async(place)=>{
+if(place){
+localStorage.setItem('place',JSON.stringify(place))
+}
+return place
+}
 const placesService={
-    getPlaces
+    getPlaces,
+    setPlace
 }
 
 export default placesService

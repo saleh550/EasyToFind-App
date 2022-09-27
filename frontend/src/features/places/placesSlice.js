@@ -16,8 +16,21 @@ const initialState={
 //get places from google maps api by text search
 export const getPlaces=createAsyncThunk('places/get',async(textSearch,thunkAPI)=>{
     try{
-        
         return await placesService.getPlaces(textSearch)
+        
+    }catch(error){
+        const message=(error.response&&error.response.data&&error.response.data.message)
+        ||error.message
+        ||error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+
+})
+
+//set specific place in the state
+export const setPlace=createAsyncThunk('place/set',async(place,thunkAPI)=>{
+    try{
+        return await placesService.setPlace(place)
         
     }catch(error){
         const message=(error.response&&error.response.data&&error.response.data.message)
@@ -55,6 +68,21 @@ export const placesSlice=createSlice({
             state.isError=true
             state.message=action.payload
             state.places=null
+            
+        })
+        .addCase(setPlace.pending,(state)=>{
+            state.isLoading=true
+        })
+        .addCase(setPlace.fulfilled,(state,action)=>{
+            state.isLoading=false
+            state.isSuccess=true
+            state.place=action.payload
+        })
+        .addCase(setPlace.rejected,(state,action)=>{
+            state.isLoading=false
+            state.isError=true
+            state.message=action.payload
+            state.place=null
             
         })
     }

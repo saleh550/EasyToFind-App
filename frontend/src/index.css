@@ -326,5 +326,60 @@ li {
     /* border-start-start-radius: 20px;
     border-start-end-radius: 20px; */
   }
+ 
+  .carousel-control-prev{
+    background-color:transparent;
+    border: none;
+  }
+  .carousel-control-next{
+    background-color:transparent;
+    border: none;
+  }
+ 
+  .carousel-image img{
+    border-radius:20px ;
+    
+    width: 100%;
+    height: 400px;
+  text-align: center;
+   /* background-color: #ba2b29; */
+    
+  }
+  .profile-image{
+    /* size: 200px; */
+    /* width:300px; */
+    width: 200px;
+    border-radius: 50%;
+  } 
+ 
+  .row-sm input  {
+   border:1px solid rgb(108, 107, 107) ;
+   border-radius: 20px;
+   height: 38px;
+   padding-left: 20px;
+   /* font-size: large; */
+   font-family:Cursive;
+   
+   box-shadow: inset 0 1px 3px #ddd;
+
+   
+  }
+
+ 
+  .row-sm label{
+    font-size:20px;
+    margin-right: 8px;
+    font-family:Cursive;
+  
+  }
+  .row-sm{
+    
+    position: relative;
+    /* border: 1px solid; */
+    /* width:400px; */
+    right: 1px;
+  }
+
+ 
 
   

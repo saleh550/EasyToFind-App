@@ -20,28 +20,28 @@ function Header(){
         dispatch(reset())
      }
     return (
-        <nav className="navbar navbar-expand-lg bg-body" >
+        <nav className="navbar navbar-expand-lg bg-body " >
                 <div className="container-fluid" >
-                    <Link className="navbar-brand text-light" to="/">Barber <span className='navbar-brand' style={{"color":"red"}}>Shop</span></Link>
+                    <Link className="navbar-brand text-dark" to="/">Barber <span className='navbar-brand' style={{"color":"red"}}>Shop</span></Link>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                 <Link className="nav-link text-light" to="/profile">Profile</Link>
+                                 <Link className="nav-link text-dark" to="/profile">Profile</Link>
                             </li>
                             <li className="nav-item">
-                                 <Link className="nav-link text-light" to="/places-list">My Places List</Link>
+                                 <Link className="nav-link text-dark" to="/places-list">My Places List</Link>
                             </li>
                         </ul>
                     </div>
                     {user?(
                                 <>
-                                    <a className="nav-link text-light"  >{user.name}</a>
+                                    <a className="nav-link text-dark font-weight-bold"  >{user.name}</a>
                                     <img className='profile-img' src={user.imageUrl?user.imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"}/>
                                 </>  
                             ):(
                                 <>
-                                <Link className="nav-link text-light"  to="/login">Sign in</Link>
-                                <Link className="nav-link text-light"  to="/register">Sign up</Link>
+                                <Link className="nav-link text-dark font-weight-bold"  to="/login">Sign in</Link>
+                                <Link className="nav-link text-dark font-weight-bold"  to="/register">Sign up</Link>
                                 </>
                                 )}
                 </div> 
