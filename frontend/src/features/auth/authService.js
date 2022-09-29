@@ -43,10 +43,24 @@ const logout= ()=>{
     localStorage.removeItem('user')
 }
 
+//update user
+const updateUser=async(userData)=>{
+    const response=await axios.put(API_URL+`/update/${userData.id}`,userData)
+    return response.data
+
+}
+//change Password
+const changePassword=async(data)=>{
+    const response= await axios.put(API_URL+`/update/password/${data.id}`,data)
+    return response.data
+}
+
 const authService={
     register,
     logout,
     loginWithGoogle,
+    updateUser,
+    changePassword,
     login
 }
 

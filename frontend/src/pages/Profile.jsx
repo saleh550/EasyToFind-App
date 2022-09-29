@@ -1,22 +1,38 @@
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
+import { updateUser } from '../features/auth/authSlice'
 import {useEffect,useState} from 'react'
+import { useNavigate } from 'react-router-dom'
+import {toast} from 'react-toastify'
 import Header from '../components/Header'
 import {BiSave} from 'react-icons/bi'
 import {MdOutlineCancel} from 'react-icons/md'
 import {MdOutlineSettingsBackupRestore} from 'react-icons/md'
 import {RiLockPasswordLine} from 'react-icons/ri'
+import {MdAddAPhoto} from 'react-icons/md'
+import Modal from 'react-modal'
+
+const customStyles={
+    content:{
+        width:'600px',
+        top:'50%',
+        left: '50%',
+        right: 'auto',
+        buttom:'auto',
+        marginRight:'-51%',
+        transform: 'translate(-50%,-50%)',
+        position: 'relative',
+    }
+}
+
 
 function Profile(){
+   
+const dispatch=useDispatch()
+const navigate=useNavigate()
 const {user,isLoading}=useSelector(state=>state.auth)
 const [isDisabled,setIsDisabled]=useState(true)
 const [isUpdating,setIsUpdating]=useState(false)
-const [formData,setFormData]=useState({
-    newName:'',
-    newEmail:'',
-    newPhoneNumber:''
-})
-const {newName,newEmail,newPhoneNumber}=formData
-
+const [modalIsOpen,setModalIsOpen]=useState(false)
 const  {
     name,
     email,
@@ -24,18 +40,94 @@ const  {
     imageUrl,
 
 }=user;
+useEffect(()=>{
+    setFormData({
+        newName:name,
+        newEmail:email,
+        newPhoneNumber:phoneNumber
+    })
+},[user])
+const [formData,setFormData]=useState({
+    newName:name,
+    newEmail:email,
+    newPhoneNumber:phoneNumber
+})
+const {newName,newEmail,newPhoneNumber}=formData
+
+
 const onUpdate=(e)=>{
+    
     setIsUpdating(true)
     setIsDisabled(false)
+    e.preventDefault()
 }
 const onCancel=(e)=>{
+    e.preventDefault()
     setIsDisabled(true)
     setIsUpdating(false)
     setFormData({
-        newName:"",
-        newEmail:"",
-        newPhoneNumber:""
+        newName:name,
+        newEmail:email,
+        newPhoneNumber:phoneNumber
     })
+}
+const onSave=(e)=>{
+    e.preventDefault()
+    const data={
+        name:newName,
+        email:newEmail,
+        phoneNumber:newPhoneNumber,
+        id:user._id
+    }
+     dispatch(updateUser(data))
+     onCancel(e)
+     closeModal(e)
+     toast.success("User changed!")
+
+}
+const checkSuccessful=(e)=>{
+    e.preventDefault()
+    if(formData.newEmail===user.email&&formData.newName===user.name&&formData.newPhoneNumber===user.phoneNumber){
+        toast.error("No changes happened")
+        return
+    }
+    if(formData.newEmail===""||formData.newName===""||formData.newPhoneNumber===""){
+        switch(""){
+            case formData.newEmail:{
+                toast.error("Email is empty , Add Email !")
+                break;
+            }
+            case formData.newName:{
+                toast.error("Name is empty , Add Name !")
+                break;
+            }
+            case formData.newPhoneNumber:{
+                toast.error("Phone Number is empty , Add Phone Number !")
+                break;
+            }
+        }
+        return
+    }
+    if(newPhoneNumber.length===10){
+        var i=0;
+        for( i=0;i<newPhoneNumber.length;i++){
+           if(isNaN(newPhoneNumber[i])){
+            toast.error("Phone number has failed , Make sure the number is correct ")
+            
+            return
+           }
+
+        }
+    }else{
+        toast.error("Phone number has failed , Make sure it contains 10 digits ")
+        return
+    }
+    setModalIsOpen(true)
+   
+  
+
+    
+
 }
 const onChange=(e)=>{
     
@@ -43,8 +135,10 @@ const onChange=(e)=>{
         ...prevstate,
         [e.target.name]:e.target.value
     }))
-    console.log(newEmail)
+  
 }
+const openModal=()=> setModalIsOpen(true)
+const closeModal=()=> setModalIsOpen(false)
 
 return (
 
@@ -52,7 +146,10 @@ return (
 <>
 <Header/>
 <div className='container mt-3' style={{"textAlign":"center"}} >
+    
     <img src={imageUrl?imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"} className="profile-image"/>
+    <div ><button className='btn btn-dark mt-2 text-light ml-5 '  style={{"position":"relative" ,"left":"15%"}} ><MdAddAPhoto/> Update Image</button></div>
+    <form onSubmit={checkSuccessful}>
     <div className='col mt-5 profile-data mr-4' >
    
     <div className='row-sm mt-3'>
@@ -67,14 +164,14 @@ return (
         <label className="text-dark " disabled>phone:</label>
         <input onChange={onChange} name="newPhoneNumber" id="phoneNumber" value={newPhoneNumber} placeholder={phoneNumber?phoneNumber:"Phone Number"} disabled={isDisabled}/>
     </div>
-    <div className='btn-group mt-5'>
+    <div className='btn-group my-5'>
     <button onClick={onUpdate} className='btn  bg-warning text-light btn-profile'>
 
     <MdOutlineSettingsBackupRestore className='text-light  pr-1' style={{"fontSize":"23px"}} />
     Update</button>
     {isUpdating&&(
         <>
-        <button  className='btn bg-success mx-3 text-light btn-profile'>
+        <button type='submit'  className='btn bg-success mx-3 text-light btn-profile'>
         <BiSave className='text-light  pr-1' style={{"fontSize":"23px"}} />
         Save</button>
         <button onClick={onCancel} className='btn bg-danger text-light btn-profile'>
@@ -83,26 +180,28 @@ return (
         </>
     )}
     {!isUpdating&&(
-        <button  className='btn bg-dark mx-3 text-light btn-profile'>
+        <button onClick={()=>navigate('/changepassword')} className='btn bg-dark mx-3 text-light btn-profile'>
         <RiLockPasswordLine className='text-light  pr-1' style={{"fontSize":"23px"}} />
         Change Password</button>
     )}
     </div>
-    
-
-   
-
-
-   
-    
-  
-  
-
-     
     </div>
-    
+    </form>
+
+    <Modal isOpen={modalIsOpen} onRequestClose ={closeModal} style={customStyles}  ariaHideApp={false} contentLabel='Update User' >
+        <h4>Are you sure want to update user ?</h4>
+       {user.name!==newName&& <h6 className='text-danger'>Name : {user.name} to {newName}</h6>}
+       {user.email!==newEmail&& <h6 className='text-danger'>Email : {user.email} to {newEmail}</h6>}
+       {user.phoneNumber!==newPhoneNumber&& <h6 className='text-danger'>phone Number : {user.phoneNumber} to {newPhoneNumber}</h6>}
+       <div className='btn-group'>
+        <button onClick={onSave} className='btn btn-light'>Accept</button>
+        <button onClick={closeModal} className='btn btn-light'>Cancel</button>
+
+       </div>
 
 
+
+    </Modal>
 </div>
 </>
 )

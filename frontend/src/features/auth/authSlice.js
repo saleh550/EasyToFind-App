@@ -65,6 +65,34 @@ export const loginWithGoogle=createAsyncThunk(
      }
 
 )
+//Update User
+export const updateUser=createAsyncThunk('update/user',async(userData,thunkAPI)=>{
+   
+    
+
+    try{
+        return await authService.updateUser(userData)
+    }
+    catch(error){
+            const message=(error.response&&error.response.data&&error.response.data.message)
+            ||error.message
+            ||error.toString()
+            return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//change password
+export const changePassword=createAsyncThunk('change/password',async(data,thunkAPI)=>{
+    try{
+        return await authService.changePassword(data)
+    }catch(error){
+        const message=(error.response&&error.response.data&&error.response.data.message)
+            ||error.message
+            ||error.toString()
+            return thunkAPI.rejectWithValue(message)
+    }
+    
+})
 
 
 
@@ -127,6 +155,35 @@ export const authSlice=createSlice({
                 state.message=action.payload
                 state.user=null
             })
+            .addCase(updateUser.pending,(state)=>{
+                state.isLoading=true
+            })
+            .addCase(updateUser.fulfilled,(state,action)=>{
+                state.isLoading=false
+                state.isSuccess=true
+                state.user=action.payload
+            })
+            .addCase(updateUser.rejected,(state,action)=>{
+                state.isLoading=false
+                state.isError=true
+                state.message=action.payload
+                state.user=null
+            })
+            .addCase(changePassword.pending,(state)=>{
+                state.isLoading=true
+            })
+            .addCase(changePassword.fulfilled,(state,action)=>{
+                state.isLoading=false
+                state.isSuccess=true
+                
+            })
+            .addCase(changePassword.rejected,(state,action)=>{
+                state.isLoading=false
+                state.isError=true
+                state.message=action.payload
+                
+            })
+            
             
     }
 

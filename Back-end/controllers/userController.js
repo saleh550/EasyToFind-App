@@ -4,7 +4,7 @@ const jwt=require('JsonWebToken')
 const User=require('../models/userModel')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport=require('passport')
-const { findOne, create } = require('../models/userModel')
+const { findOne, create, findByIdAndUpdate } = require('../models/userModel')
 
 
  const generateToken=(id)=>{
@@ -154,6 +154,57 @@ const loginWithGoogle=asyncHandler( async(req,res)=>{
    
 
 })
+//@desc Update user 
+//@route put /api/users/update/:id
+//@access private
+const updateUser=asyncHandler(async(req,res)=>{
+   
+    try {
+        const dataUpdated=await User.findByIdAndUpdate(req.params.id,req.body,{new:true})
+        res.status(200).json(dataUpdated)
+    } catch (error) {
+        res.status(400)
+        throw new Error("Not updated!")
+    }
+   
+
+})
+//@desc change password 
+//@route put /api/users/update/password/:id
+//@access private
+const changePassword=asyncHandler(async(req,res)=>{
+    const {password1,password2,password}=req.body
+    const user =await User.findById(req.params.id)
+    if(user){
+        if((await bcrypt.compare(password,user.password))){
+            try{
+                if(password1===password2){
+                //Hash password
+                const salt =await bcrypt.genSalt(10)
+                const hashedPassword=await bcrypt.hash(password1,salt)
+                const dataUpdated=await User.findByIdAndUpdate(req.params.id,{password:hashedPassword},{new:true})
+                res.status(200).json(dataUpdated)
+                }else{
+                    res.status(401)
+                    throw new Error("enter a same passwords") 
+                }
+                
+
+            }
+            catch(error){
+                res.status(400)
+                throw new Error("enter a same passwords")
+            }
+        }else
+        {
+            res.status(401)
+            throw new Error("Invalid Passsword")
+        }
+    }else{
+        res.status(401)
+        throw new Error("authrization failed")
+    }
+})
 
 
 
@@ -161,5 +212,7 @@ module.exports={
     registrUser, 
     loginUser,
     loginWithGoogle,
-    getMe
+    getMe,
+    changePassword,
+    updateUser
 }
