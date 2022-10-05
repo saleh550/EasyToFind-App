@@ -36,7 +36,6 @@ function Home(){
             <header className='home-header'>
         
         <Header/>
-        
      <section className='home-search'>
          <form className="d-flex" role="search" onSubmit={fetchPlaces}>
              <input 

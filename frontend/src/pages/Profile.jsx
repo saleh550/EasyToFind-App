@@ -140,6 +140,11 @@ const onChange=(e)=>{
 const openModal=()=> setModalIsOpen(true)
 const closeModal=()=> setModalIsOpen(false)
 
+const fileSelected = event => {
+    const file = event.target.files[0]
+		console.log("saleh")
+	}
+
 return (
 
 
@@ -148,7 +153,7 @@ return (
 <div className='container mt-3' style={{"textAlign":"center"}} >
     
     <img src={imageUrl?imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"} className="profile-image"/>
-    <div ><button className='btn btn-dark mt-2 text-light ml-5 '  style={{"position":"relative" ,"left":"15%"}} ><MdAddAPhoto/> Update Image</button></div>
+    <div ><input className='btn btn-dark mt-2 text-light ml-5 '  style={{"position":"relative" ,"left":"15%"}} onChange={fileSelected} type="file" accept="image/*" ></input></div>
     <form onSubmit={checkSuccessful}>
     <div className='col mt-5 profile-data mr-4' >
    
