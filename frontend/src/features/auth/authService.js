@@ -54,6 +54,14 @@ const changePassword=async(data)=>{
     const response= await axios.put(API_URL+`/update/password/${data.id}`,data)
     return response.data
 }
+//upload image 
+const uploadImage=async(formdata)=>{
+    const id=formdata.get("id")
+    const response=await axios.post(API_URL+`/upload/image/${id}`,formdata)
+    return response.data
+    
+
+}
 
 const authService={
     register,
@@ -61,7 +69,8 @@ const authService={
     loginWithGoogle,
     updateUser,
     changePassword,
-    login
+    login,
+    uploadImage
 }
 
 export default authService

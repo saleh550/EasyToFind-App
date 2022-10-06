@@ -27,7 +27,7 @@ const upload=multer({
             });
           },
         key:(req,file,cb)=>{
-            cb(null,`profileImages/image-${req.params.id}.png`);//profileImage/.. ,that give the file path in the bucket s3
+            cb(null,`profileImages/image-${Date.now()}-${req.params.id}.png`);//profileImage/.. ,that give the file path in the bucket s3
         }
     })
 })

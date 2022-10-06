@@ -85,6 +85,7 @@ const loginUser=asyncHandler( async(req,res)=>{
             isAdmin:user.isAdmin,
             email:user.email,
             password:user.password,
+            imageUrl:user.imageUrl,
             phoneNumber:user.phoneNumber,
             token:generateToken(user._id)
         })
@@ -214,6 +215,7 @@ const uploadImage =asyncHandler(async(req,res)=>{
         const imageMimeType=req.file.mimetype.split('/')[0]
          if(imageMimeType==="image"){
         const dataUpdated=await User.findByIdAndUpdate(req.params.id,{imageUrl:req.file.location},{new:true})
+        console.log(dataUpdated)
         res.status(200).json(dataUpdated)
         }else{
             throw new Error()

@@ -1,5 +1,5 @@
 import {useSelector,useDispatch} from 'react-redux'
-import { updateUser } from '../features/auth/authSlice'
+import { updateUser,uploadImage } from '../features/auth/authSlice'
 import {useEffect,useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
@@ -10,6 +10,7 @@ import {MdOutlineSettingsBackupRestore} from 'react-icons/md'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {MdAddAPhoto} from 'react-icons/md'
 import Modal from 'react-modal'
+import Spinner from '../components/Spinner'
 
 const customStyles={
     content:{
@@ -33,6 +34,8 @@ const {user,isLoading}=useSelector(state=>state.auth)
 const [isDisabled,setIsDisabled]=useState(true)
 const [isUpdating,setIsUpdating]=useState(false)
 const [modalIsOpen,setModalIsOpen]=useState(false)
+const [file,setFile]=useState()
+const [imageSelected,setImageSelected]=useState(false)
 const  {
     name,
     email,
@@ -141,19 +144,46 @@ const openModal=()=> setModalIsOpen(true)
 const closeModal=()=> setModalIsOpen(false)
 
 const fileSelected = event => {
+    setImageSelected(true)
     const file = event.target.files[0]
-		console.log("saleh")
+    setFile(file)
+		
 	}
+    const onUploadImage=(e)=>{
+        if(!file){
+            toast.error("You Need To Choose Image!")
+            return
+        }
+        setImageSelected(false)
+        const formdata=new FormData()
+        formdata.append('image',file)
+        formdata.append('id',"6315aec68d64ae778901ff3f")
+
+        dispatch(uploadImage(formdata))
+        setFile(null)
+        
+        
+    }
 
 return (
-
-
 <>
+{isLoading&&<Spinner/>}
 <Header/>
-<div className='container mt-3' style={{"textAlign":"center"}} >
+
+<div className='container mt-3 ' style={{"textAlign":"center"}} >
     
-    <img src={imageUrl?imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"} className="profile-image"/>
-    <div ><input className='btn btn-dark mt-2 text-light ml-5 '  style={{"position":"relative" ,"left":"15%"}} onChange={fileSelected} type="file" accept="image/*" ></input></div>
+    <img src={imageUrl?imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"}  className="profile-image"/>
+    <br/>
+    {isUpdating&&(
+    <div className='btn-group' >
+    <label className='btn btn-dark mt-2 text-light ml-5 ' > Choose Image
+    <input   style={{"position":"relative" ,"left":"15%","display":"none"}} onChange={fileSelected} type="file" accept="image/*"/>
+    </label>
+    <label onClick={onUploadImage} className='btn  btn-success mt-2 text-light ml-2' >Upload Image</label>
+    </div>
+    )}
+    
+    
     <form onSubmit={checkSuccessful}>
     <div className='col mt-5 profile-data mr-4' >
    
@@ -184,10 +214,13 @@ return (
         Cancel</button>
         </>
     )}
+
     {!isUpdating&&(
+        <>
         <button onClick={()=>navigate('/changepassword')} className='btn bg-dark mx-3 text-light btn-profile'>
         <RiLockPasswordLine className='text-light  pr-1' style={{"fontSize":"23px"}} />
         Change Password</button>
+        </>
     )}
     </div>
     </div>
