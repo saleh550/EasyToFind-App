@@ -4,7 +4,7 @@ body {
   position: absolute;
   font-family: "Roboto", sans-serif;
   margin: 0;
-  background-color: #f2f4ed;
+  background-color: #f4ecec;
   width: 100%;
   margin: 0px 0px;
 }
@@ -96,13 +96,13 @@ li {
     
 
   }
-  .form{
+  /* .form{
     position: static;
     text-align: center;
     margin: auto 25%;
     
-  }
-  .form h1{
+  } */
+  .container h1{
     font-family: 'Brush Script MT', cursive;
     font-size: 300%;
    
@@ -134,7 +134,7 @@ li {
     margin-top: 2%;
     font-family: 'Brush Script MT', cursive;
   }
-  .btn-login{
+  /* .btn-login{
    
     margin: 7% auto 1% auto;
     width: 80%;
@@ -145,14 +145,14 @@ li {
     border: 1px solid rgb(88, 86, 86);
     border-radius: 5px;
    
-  }
-  .btn-login:hover{
+  } */
+  /* .btn-login:hover{
     
     font-size: 170%;
     width: 82%;
     
    
-  }
+  } */
   .p-icon{
     font-size: 150%;
     color: #3f3e3e;
@@ -160,6 +160,7 @@ li {
 
   }
   .google-facebook-login{
+   
     margin-top: 20px;
   }
   .google-icon:hover{
@@ -360,7 +361,7 @@ li {
     bottom: 0px;
     left: 0px;
     border-radius: 20px;
-    background-color:rgba(8, 8, 8, 0.63);
+    background-color:rgba(29, 29, 29, 0.63);
 
   }
   
@@ -427,6 +428,13 @@ li {
     /* border: 1px solid; */
     /* width:400px; */
     right: 1px;
+  }
+  .btn-profile{
+    font-family: 'Brush Script MT', cursive;
+  }
+  .btn-profile-login{
+    width: 200px;
+    margin-top: 20px;
   }
 
 

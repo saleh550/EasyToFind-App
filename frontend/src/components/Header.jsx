@@ -42,8 +42,8 @@ function Header({isForm}){
             <>
             <a onClick={onLogout} href="/" className="nav-link text-light font-weight-bold">Logout</a>
             <div>
-            {/* <img className='profile-img' src={user.imageUrl?user.imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"}/>
-            <a className="nav-link text-light font-weight-bold"  >{user.name}</a> */}
+            <img className='profile-img' src={user.imageUrl?user.imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"}/>
+            {/* <a className="nav-link text-light font-weight-bold"  >{user.name}</a> */}
 
             </div>
             </>  

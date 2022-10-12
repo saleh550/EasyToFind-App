@@ -57,7 +57,7 @@ function Home(){
     }
   
     return(
-        <>
+        <div className="bg-black">
  
        
         <header className='home-header'>
@@ -83,7 +83,7 @@ function Home(){
                 <PlacesList/>
                 ):(
                 <NotFoundPlaces/>)} 
-        </>  
+        </div>  
     )
 }
 export default Home 
