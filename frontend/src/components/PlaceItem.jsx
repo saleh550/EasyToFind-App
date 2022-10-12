@@ -12,19 +12,22 @@ function PlaceItem({place}){
 
     }
     return (
-    <div class="card place-item" >
-        {place.photos?<img src={`${process.env.REACT_APP_GOOGLE_REQUIST_PHOTO}photo_reference=${place.photos[0]}&key=${process.env.REACT_APP_API_KEY}&maxheight=300&maxwidth=300`} class="d-block w-100" alt="image"/>:<img src="https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=" class="d-block w-100" alt="image"/>}
-       
-        <div class="card-body">
-            <h5 class="card-title">{place.name}</h5>
-            <p class="card-text">{place.type}</p>
-            {place.isOpen?<p className="card-text text-success">open</p>:<p className="text-danger">close</p>} 
-            <div className="btn-group me-2">
-                <button style={{"width":"5rem"}} href="#" class="btn btn-success btn-sm">Add</button>
-                <button style={{"marginLeft":" 5px"}}  onClick={moreInfo} className="btn btn-dark btn-sm">More</button>
-                {place.web_site&&<a target="_blank" rel="noopener noreferrer" style={{"marginLeft":" 5px"}} href={place.web_site} class="btn btn-dark btn-sm">Visit us</a>}
-            </div>
-        </div>
+    <div 
+    onClick={moreInfo}
+    className='item px-2' 
+    style={place.photos?
+    ({"backgroundImage":`url('${process.env.REACT_APP_GOOGLE_REQUIST_PHOTO}photo_reference=${place.photos[0]}&key=${process.env.REACT_APP_API_KEY}&maxheight=300&maxwidth=300')`})
+    :({"backgroundImage":"url('https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg')"})}
+    >
+    <div>
+    <h4  className='text-white'>{place.name}</h4>
+    <br/>
+    <p className='text-white-50'>{place.formatted_address}</p>
+    <br/>
+    <p className='text-white-50'>{place.type}</p>
+
+    </div>
+    
     </div>
      
      ) 

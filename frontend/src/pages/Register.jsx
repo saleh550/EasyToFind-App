@@ -73,7 +73,10 @@ function Register(){
     }
     return (
         <>
+         <div className='home-header'>
         <Header/>
+
+        </div>
         <div className='log-page'>
         
 

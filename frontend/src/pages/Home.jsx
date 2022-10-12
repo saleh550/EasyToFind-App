@@ -64,7 +64,7 @@ function Home(){
         
            <Header/>
            
-            <section className='home-search'>
+            <section className='home-search ' >
                 <form className="d-flex" role="search" onSubmit={fetchPlaces}>
                     <input 
                     className="form-control me-2" 
@@ -75,7 +75,7 @@ function Home(){
                     value={textSearch}
                     onChange={(e)=>{setTextSearch(e.target.value) }}
                     />
-                    <button className="btn btn-outline-success" type="submit">Search</button>
+                    <button className="btn btn-success" type="submit">Search</button>
                 </form>
             </section>   
         </header>

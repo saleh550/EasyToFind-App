@@ -4,7 +4,7 @@ import {FaUser,FaSignInAlt} from 'react-icons/fa'
 import {useSelector,useDispatch} from 'react-redux'
 import {logout,reset} from '../features/auth/authSlice'
 
-function Header(){
+function Header({isForm}){
     const navigate =useNavigate()
     const {user}=useSelector(state=>state.auth)
     const dispatch=useDispatch()
@@ -20,32 +20,44 @@ function Header(){
         dispatch(reset())
      }
     return (
-        <nav className="navbar navbar-expand-lg bg-body " >
-                <div className="container-fluid" >
-                    <Link className="navbar-brand text-dark" to="/">Barber <span className='navbar-brand' style={{"color":"red"}}>Shop</span></Link>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                 <Link className="nav-link text-dark" to="/profile">Profile</Link>
-                            </li>
-                            <li className="nav-item">
-                                 <Link className="nav-link text-dark" to="/places-list">My Places List</Link>
-                            </li>
-                        </ul>
-                    </div>
-                    {user?(
-                                <>
-                                    <a className="nav-link text-dark font-weight-bold"  >{user.name}</a>
-                                    <img className='profile-img' src={user.imageUrl?user.imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"}/>
-                                </>  
-                            ):(
-                                <>
-                                <Link className="nav-link text-dark font-weight-bold"  to="/login">Sign in</Link>
-                                <Link className="nav-link text-dark font-weight-bold"  to="/register">Sign up</Link>
-                                </>
-                                )}
-                </div> 
-            </nav>
+       
+        <nav className="navbar navbar-expand-lg navbar-light  ">
+            <Link className="navbar-brand text-light" to="/">Barber <span className='navbar-brand' style={{"color":"red"}}>Shop</span></Link>
+
+      <button className="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item active">
+          <Link className="nav-link text-light" to="/profile">Profile</Link>
+          </li>
+          <li className="nav-item">
+          <Link className="nav-link text-light" to="/places-list">My Places List</Link>
+          </li>
+         
+        </ul>
+       <div className="form-inline">
+       {user?(
+            <>
+            <a onClick={onLogout} href="/" className="nav-link text-light font-weight-bold">Logout</a>
+            <div>
+            {/* <img className='profile-img' src={user.imageUrl?user.imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"}/>
+            <a className="nav-link text-light font-weight-bold"  >{user.name}</a> */}
+
+            </div>
+            </>  
+            ):(
+            <>
+            <Link className="nav-link text-light font-weight-bold"  to="/login">Sign in</Link>
+            <Link className="nav-link text-light font-weight-bold"  to="/register">Sign up</Link>
+            </>
+            )}
+
+       </div>
+      </div>
+    </nav>
+   
        
     )
 }

@@ -23,8 +23,10 @@ function PlaceInformation(){
    
     return (
         <>
-     
+        <div className='home-header'>
         <Header/>
+
+        </div>
         <div className="container mt-5 py-5 px-5 ">
             
             <ImagesCarousel place={place}/>

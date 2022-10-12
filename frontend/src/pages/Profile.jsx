@@ -14,16 +14,17 @@ import Spinner from '../components/Spinner'
 
 const customStyles={
     content:{
-        width:'600px',
+        width:'60%',
         top:'50%',
         left: '50%',
         right: 'auto',
         buttom:'auto',
-        marginRight:'-51%',
+        margin:'auto 5px',
         transform: 'translate(-50%,-50%)',
         position: 'relative',
     }
 }
+
 
 
 function Profile(){
@@ -168,14 +169,17 @@ const fileSelected = event => {
 return (
 <>
 {isLoading&&<Spinner/>}
-<Header/>
+<header className='home-header'>
+<Header />
+
+</header>
 
 <div className='container mt-3 ' style={{"textAlign":"center"}} >
     
     <img src={imageUrl?imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"}  className="profile-image"/>
     <br/>
     {isUpdating&&(
-    <div className='btn-group' >
+        <div className='btn-group' >
     <label className='btn btn-dark mt-2 text-light ml-5 ' > Choose Image
     <input   style={{"position":"relative" ,"left":"15%","display":"none"}} onChange={fileSelected} type="file" accept="image/*"/>
     </label>

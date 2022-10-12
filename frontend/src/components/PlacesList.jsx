@@ -6,7 +6,7 @@ function ListPlaces(){
         <div className='row home-main'>
         {places.map((place)=>{
             return(
-                <div className='col-sm-6 col-md-4 col-lg-3 sa'>
+                <div className='container col-sm-6 col-md-4 col-lg-3 sa'>
                 <PlaceItem id={place._id.toString()} key={place._id} place={place} />
                 </div>
             )

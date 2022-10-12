@@ -53,7 +53,10 @@ function ChangePassword(){
         dispatch(changePassword(data))
     }
     return (<>
+        <div className="home-header">
         <Header/>
+
+        </div>
         <div className='container mt-5' style={{"textAlign":"center"}}>
         
             <h1 className="text-dark">Change Password !</h1>

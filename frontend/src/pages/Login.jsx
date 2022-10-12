@@ -70,7 +70,10 @@ function Login(){
    }
     return (
         <>
+         <div className='home-header'>
         <Header/>
+
+        </div>
         <div className='container'>
         <div className='form'>
             <form onSubmit={onSubmit}>
