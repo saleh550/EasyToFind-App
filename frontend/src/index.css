@@ -9,6 +9,7 @@ body {
   margin: 0px 0px;
 }
 h1{
+  font-family: 'Brush Script MT', cursive;
   margin-top: 0;
 }
 
@@ -23,6 +24,9 @@ ul {
 
 li {
   line-height: 2.2;
+}
+p{
+  font-family: 'Brush Script MT', cursive;
 }
 * {
   margin: 0;
@@ -69,7 +73,7 @@ li {
   .signin-up-header  p  {
     margin: auto 1rem auto 1rem;
     display: inline-block;
-    color:#FAEBD7;
+    color:#faebd7;
     font-size: 20px;
   }
 
@@ -103,7 +107,7 @@ li {
     
   } */
   .container h1{
-    font-family: 'Brush Script MT', cursive;
+    /* font-family: 'Brush Script MT', cursive; */
     font-size: 300%;
    
   }
@@ -198,6 +202,7 @@ li {
 
   
   .home-header{
+    width: 100%;
     align-items: center;
     text-align: center;
     background-image: url('https://profile-images-barbershop-app.s3.amazonaws.com/middleware/navigate.jpg');
@@ -365,7 +370,13 @@ li {
 
   }
   
-   .item h4 ,p{
+   .item h4{
+    position: absolute;
+    color:#fff;
+    margin-top: 5px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  .item p{
     position: absolute;
     color:#fff;
     margin-top: 5px;
@@ -403,6 +414,7 @@ li {
   } 
  
   .row-sm input  {
+  width: 350px;
    border:1px solid rgb(108, 107, 107) ;
    border-radius: 20px;
    height: 38px;
@@ -425,8 +437,6 @@ li {
   .row-sm{
     
     position: relative;
-    /* border: 1px solid; */
-    /* width:400px; */
     right: 1px;
   }
   .btn-profile{

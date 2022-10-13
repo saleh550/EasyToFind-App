@@ -77,13 +77,11 @@ function Register(){
         <Header/>
 
         </div>
-        <div className='log-page'>
-        
-
-        <div className='form'>
+        {/* <div className='container mt-5 ' style={{"textAlign":"center"}}>
             <form onSubmit={onSubmit}>
-            <h1>  התחבר <FaUser/> </h1>
-            <div className='form-group'>
+
+                <h1>  התחבר <FaUser/> </h1>
+                <div className='form-group'>
                 
                  <input
                     type='text'
@@ -161,11 +159,98 @@ function Register(){
 
             
             </form>
-            </div>
+           
 
 
+        </div> */}
+        <div className='container mt-5 ' style={{"textAlign":"center"}}>
+            <h1><FaUser/> Register</h1>
+            <form onSubmit={onSubmit}>
+                <div className='col mt-5 profile-data mr-4' >
+                    <div className='row-sm mt-3'>
+                        <label className="text-dark d-none d-lg-inline" disabled>name:</label>
+                        <input
+                        type='text'
+                        placeholder='Full Name'
+                        id='name'
+                        name='name'
+                        value={name}
+                        onChange={onChange}
+                        required
+                        />
+                    </div>
+                    <div className='row-sm mt-3'>
+                        <label className="text-dark d-none d-lg-inline " disabled>email:</label>
+                        <input
+                        type='email'
+                        placeholder='Email'
+                        id='email'
+                        name='email'
+                        value={email}
+                        onChange={onChange}
+                        required
+                    
+                        />
+                    </div>
+                    <div className='row-sm mt-3'>
+                        <label className="text-dark d-none d-lg-inline " disabled>pass:</label>
+                        <input
+                        type='password'
+                        placeholder='Password'
+                        id='password'
+                        name='password'
+                        value={password}
+                        onChange={onChange}
+                        required
+                    
+                        />
+                    </div>
+                    <div className='row-sm mt-3'>
+                        <label className="text-dark d-none d-lg-inline" disabled>pass:</label>
+                        <input
+                        type='password'
+                        placeholder='Comfirt Password'
+                        id='password2'
+                        name='password2'
+                        value={password2}
+                        onChange={onChange}
+                        required
+                    
+                        />
+                    </div>
+                    <div className='row-sm mt-3'>
+                        <label className="text-dark d-none d-lg-inline" disabled>phone:</label>
+                        <input
+                        type='text'
+                        placeholder='Phone Number'
+                        id='phoneNumber'
+                        name='phoneNumber'
+                        value={phoneNumber}
+                        onChange={onChange}
+                        required
+                    
+                        />
+                    </div>
+                </div>
+                <button className='btn btn-dark text-light btn-profile btn-profile-login mt-5' type='submit'>Register</button>
+                <div className='mt-5'>
+                   <label  >
+                <FcGoogle className='display-4 ' />
+                <p className='text-dark'>Register With Google</p>
+                 <GoogleLogin 
+                className='google-facebook-login d-none'
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                buttonText='Login With Google'
+                onSuccess={googleRegister}
+                onFailure={googleFailedSignin}
+                >    
+                </GoogleLogin>  
+                </label> 
+                </div>
+                
+                
+            </form>
         </div>
-            
         
         </>
     )

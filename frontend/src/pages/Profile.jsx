@@ -207,7 +207,7 @@ return (
     <button onClick={onUpdate} className='btn  bg-warning text-light btn-profile'>
 
     <MdOutlineSettingsBackupRestore className='text-light  pr-1' style={{"fontSize":"23px"}} />
-    Update</button>
+    Edit</button>
     {isUpdating&&(
         <>
         <button type='submit'  className='btn bg-success mx-3 text-light btn-profile'>

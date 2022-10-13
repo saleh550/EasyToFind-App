@@ -14,7 +14,8 @@ function Header({isForm}){
         
        
     }
-     const onLogout=()=>{
+     const onLogout=(e)=>{
+      e.preventDefault()
         console.log('onlogout')
         dispatch(logout())
         dispatch(reset())
@@ -22,7 +23,7 @@ function Header({isForm}){
     return (
        
         <nav className="navbar navbar-expand-lg navbar-light  ">
-            <Link className="navbar-brand text-light" to="/">Barber <span className='navbar-brand' style={{"color":"red"}}>Shop</span></Link>
+            <Link className="navbar-brand text-light" to="/">EasyTo<span className='navbar-brand' style={{"color":"red"}}>Find</span></Link>
 
       <button className="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
@@ -43,7 +44,7 @@ function Header({isForm}){
             <a onClick={onLogout} href="/" className="nav-link text-light font-weight-bold">Logout</a>
             <div>
             <img className='profile-img' src={user.imageUrl?user.imageUrl:"https://img-c.udemycdn.com/user/200_H/anonymous_3.png"}/>
-            {/* <a className="nav-link text-light font-weight-bold"  >{user.name}</a> */}
+            
 
             </div>
             </>  
