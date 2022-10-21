@@ -38,6 +38,7 @@ const [modalIsOpen,setModalIsOpen]=useState(false)
 const [file,setFile]=useState()
 const [imageSelected,setImageSelected]=useState(false)
 const  {
+    _id,
     name,
     email,
     phoneNumber,
@@ -158,7 +159,7 @@ const fileSelected = event => {
         setImageSelected(false)
         const formdata=new FormData()
         formdata.append('image',file)
-        formdata.append('id',"6315aec68d64ae778901ff3f")
+        formdata.append('id',user._id)
 
         dispatch(uploadImage(formdata))
         setFile(null)

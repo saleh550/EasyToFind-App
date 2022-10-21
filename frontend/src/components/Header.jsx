@@ -16,9 +16,9 @@ function Header({isForm}){
     }
      const onLogout=(e)=>{
       e.preventDefault()
-        console.log('onlogout')
-        dispatch(logout())
-        dispatch(reset())
+      dispatch(logout())
+      dispatch(reset())
+      navigate('/')
      }
     return (
        

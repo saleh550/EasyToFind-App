@@ -2,18 +2,24 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import ImagesCarousel from './ImagesCarousel'
 import {setPlace} from '../features/places/placesSlice'
-function PlaceItem({place}){
+function PlaceItem({place,onChoose,onDisable}){
     const navigate=useNavigate()
     const dispatch=useDispatch()
-
-    const moreInfo=()=>{
-        dispatch(setPlace(place))
+    const moreInfo=(e)=>{
+        if(onChoose)
+        onChoose(place)
+        else{
+           
+            dispatch(setPlace(place))
         navigate(`place/info/${place._id}`)
+        }
+        
 
     }
     return (
-    <div 
-    onClick={moreInfo}
+    <div
+    
+    onClick={!onDisable?moreInfo:()=>{}}
     className='item px-2' 
     style={place.photos?
     ({"backgroundImage":`url('${process.env.REACT_APP_GOOGLE_REQUIST_PHOTO}photo_reference=${place.photos[0]}&key=${process.env.REACT_APP_API_KEY}&maxheight=300&maxwidth=300')`})

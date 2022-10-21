@@ -1,5 +1,5 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
-import placesService from './placesService'
+import busOwnPlacesService from './busOwnPlacesService'
 
 
 const initialState={ 
@@ -9,15 +9,16 @@ const initialState={
     isSuccess:false,
     isError:false,
     isLoading:false,
+    isExist:false,
     message:''
 }
 
 
 //get places from google maps api by text search
-export const getPlaces=createAsyncThunk('places/get',async(textSearch,thunkAPI)=>{
+export const getPlaces=createAsyncThunk('busOwnPlaces/get',async(textSearch,thunkAPI)=>{
     
     try{
-        return await placesService.getPlaces(textSearch)
+        return await busOwnPlacesService.getPlaces(textSearch)
         
     }catch(error){
         const message=(error.response&&error.response.data&&error.response.data.message)
@@ -27,11 +28,12 @@ export const getPlaces=createAsyncThunk('places/get',async(textSearch,thunkAPI)=
     }
 
 })
+//check places is exist in the database
+export const checkPlaceExist=createAsyncThunk('check/place',async(googleId,thunkAPI)=>{
+    
 
-//set specific place in the state
-export const setPlace=createAsyncThunk('place/set',async(place,thunkAPI)=>{
     try{
-        return await placesService.setPlace(place)
+        return await busOwnPlacesService.checkPlaceExist(googleId)
         
     }catch(error){
         const message=(error.response&&error.response.data&&error.response.data.message)
@@ -39,18 +41,22 @@ export const setPlace=createAsyncThunk('place/set',async(place,thunkAPI)=>{
         ||error.toString()
         return thunkAPI.rejectWithValue(message)
     }
-
 })
 
+//clear state of places
+export const clear=createAsyncThunk('clear/places',async()=>{
+    return await busOwnPlacesService.clear()
+})
 
-export const placesSlice=createSlice({
-    name:'places',
+export const busOwnPlacesSlice=createSlice({
+    name:'busOwnPlaces',
     initialState,
     reducers:{
         reset:(state)=>{
             state.isLoading=false
             state.isError=false
             state.isSuccess=false
+            state.isExist=false
             state.message=''
         }
     },
@@ -71,24 +77,41 @@ export const placesSlice=createSlice({
             state.places=null
             
         })
-        .addCase(setPlace.pending,(state)=>{
+        .addCase(checkPlaceExist.pending,(state)=>{
             state.isLoading=true
         })
-        .addCase(setPlace.fulfilled,(state,action)=>{
+        .addCase(checkPlaceExist.fulfilled,(state,action)=>{
+            
+            const response=action.payload
+            if(!response.isExist){
+                state.place={}
+            }else
+            state.place=response.place
+            state.isExist=response.isExist
             state.isLoading=false
-            state.isSuccess=true
-            state.place=action.payload
         })
-        .addCase(setPlace.rejected,(state,action)=>{
+        
+        .addCase(checkPlaceExist.rejected,(state,action)=>{
             state.isLoading=false
-            state.isError=true
             state.message=action.payload
-            state.place=null
+        })
+        .addCase(clear.pending,(state,action)=>{
+            state.isLoading=true
+        })
+        .addCase(clear.fulfilled,(state)=>{
+            state.places=[]
+            state.isLoading=false
             
         })
+        .addCase(clear.rejected,(state,action)=>{
+            state.message=action.payload
+            state.isLoading=false
+        })
+        
+       
     }
 
 })
 
-export const {reset}=placesSlice.actions
-export default placesSlice.reducer
+export const {reset}=busOwnPlacesSlice.actions
+export default busOwnPlacesSlice.reducer

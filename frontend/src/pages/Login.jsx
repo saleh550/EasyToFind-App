@@ -1,7 +1,7 @@
 import { useState ,useEffect} from 'react'
 import {FaUser,FaSignInAlt} from 'react-icons/fa'
 import {FcGoogle} from 'react-icons/fc'
-import Logo from '../images/barberShop3.png'
+import { Link } from 'react-router-dom'
 import Spinner from '../components/Spinner' 
 import Header from '../components/Header'
 import {useSelector,useDispatch} from 'react-redux'
@@ -77,8 +77,11 @@ function Login(){
        
     <div className='container mt-5 ' style={{"textAlign":"center"}} >
         <h1><FaUser/> Login</h1>
+        <div   className='text-right text-xl-center'>
+        <Link className='btn btn-light  btn-profile mt-3' to='/businessowner/login'>Login as a business owner</Link>
+        </div>
         <form onSubmit={onSubmit}>
-            <div className='col mt-5 profile-data mr-4' >
+            <div className='col  profile-data mr-4' >
                 <div className='row-sm mt-4'>
                     <label className="text-dark d-none d-lg-inline" disabled>email:</label>
                      <input

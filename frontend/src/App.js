@@ -12,6 +12,8 @@ import { BsGoogle } from 'react-icons/bs';
 import PrivateRouteAuth from './components/PrivateRouteAuth';
 import Profile from './pages/Profile';
 import ChangePassword from './pages/ChangePassword';
+import BusinessOwnerLogin from './pages/BusinessOwnerLogin'
+import NewPlace from './pages/NewPlace';
 
 function App() {
    // eslint-disable-next-line
@@ -35,7 +37,8 @@ function App() {
           <Route path='/changepassword' element={<PrivateRouteAuth/>}>
           <Route path='/changepassword' element={<ChangePassword/>}/>
           </Route>
-          
+          <Route path='/businessowner/login' element={<BusinessOwnerLogin/>}/>
+          <Route path='/newplace' element={<NewPlace/>}/>
         </Routes>
       </div>
 

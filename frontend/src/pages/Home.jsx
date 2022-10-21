@@ -28,8 +28,9 @@ function Home(){
         e.preventDefault()
         console.log(textSearch)
      dispatch(getPlaces({textSearch:textSearch}))
+   
     } 
-
+    
 
     if(isLoading){
         return( <div>
@@ -80,7 +81,7 @@ function Home(){
             </section>   
         </header>
         {places.length!==0?(
-                <PlacesList/>
+                <PlacesList places={places}/>
                 ):(
                 <NotFoundPlaces/>)} 
         </div>  
