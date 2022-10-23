@@ -8,7 +8,7 @@ body {
   width: 100%;
   margin: 0px 0px;
 }
-h1,h2,h3,h4,h5,h6,p{
+h1,h2,h3,h4,h5,h6,p,label,textarea,input{
   font-family: 'Brush Script MT', cursive;
   margin-top: 0;
 }
@@ -30,6 +30,14 @@ li {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+input{
+  border:1px solid rgb(108, 107, 107) ;
+   border-radius: 20px;
+}
+.form-group input{
+  border:1px solid rgb(108, 107, 107) ;
+  border-radius: 20px;
 }
 
 .header {
@@ -110,7 +118,7 @@ li {
    
   }
   
-  .form-group input{
+  /* .form-group input{
     text-align: left;
     font-size: large;
     background-color: none;
@@ -127,34 +135,9 @@ li {
     height: 2.8rem;
     
 
-  }
-  .form-group p{
-    text-align: right;
-    font-size: 170%;
-    color: #3f3e3e;
-    margin-bottom: 18px;
-    margin-top: 2%;
-    font-family: 'Brush Script MT', cursive;
-  }
-  /* .btn-login{
-   
-    margin: 7% auto 1% auto;
-    width: 80%;
-    height: 2.5rem;
-    font-size: 150%;
-    background-color: #f2f4ed;
-    color: #282727;
-    border: 1px solid rgb(88, 86, 86);
-    border-radius: 5px;
-   
   } */
-  /* .btn-login:hover{
-    
-    font-size: 170%;
-    width: 82%;
-    
-   
-  } */
+ 
+ 
   .p-icon{
     font-size: 150%;
     color: #3f3e3e;
@@ -410,7 +393,17 @@ li {
     width: 200px;
     border-radius: 5px;
   } 
- 
+  /* .input-group input{
+    width: 300px;
+   border:1px solid rgb(108, 107, 107) ;
+   border-radius: 20px;
+   height: 32px;
+   padding-left: 20px;
+   margin-right:5px ;
+   font-family:Cursive;
+   
+   box-shadow: inset 0 1px 3px #ddd;
+  } */
   .row-sm input  {
   width: 350px;
    border:1px solid rgb(108, 107, 107) ;
@@ -424,6 +417,7 @@ li {
 
    
   }
+
 
  
   .row-sm label{
@@ -453,6 +447,10 @@ li {
    font-family:Cursive;
    
    box-shadow: inset 0 1px 3px #ddd;
+  }
+  .map-container{
+    width: 100%;
+    height: 50vh;
   }
 
 

@@ -6,6 +6,7 @@ const initialState={
     
     places:[],
     place:{},
+    googlePlace:{},
     isSuccess:false,
     isError:false,
     isLoading:false,
@@ -48,6 +49,11 @@ export const clear=createAsyncThunk('clear/places',async()=>{
     return await busOwnPlacesService.clear()
 })
 
+//set google place in the state 
+export const  setGooglePlace=createAsyncThunk('set/googlePlace',async (googlePlace)=>{
+return await busOwnPlacesService.setGooglePlace(googlePlace)
+})
+
 export const busOwnPlacesSlice=createSlice({
     name:'busOwnPlaces',
     initialState,
@@ -56,7 +62,6 @@ export const busOwnPlacesSlice=createSlice({
             state.isLoading=false
             state.isError=false
             state.isSuccess=false
-            state.isExist=false
             state.message=''
         }
     },
@@ -95,17 +100,21 @@ export const busOwnPlacesSlice=createSlice({
             state.isLoading=false
             state.message=action.payload
         })
-        .addCase(clear.pending,(state,action)=>{
+        .addCase(clear.pending,(state)=>{
             state.isLoading=true
         })
         .addCase(clear.fulfilled,(state)=>{
             state.places=[]
+            state.googlePlace={}
             state.isLoading=false
             
         })
         .addCase(clear.rejected,(state,action)=>{
             state.message=action.payload
             state.isLoading=false
+        })
+        .addCase(setGooglePlace.fulfilled,(state,action)=>{
+            state.googlePlace=action.payload
         })
         
        

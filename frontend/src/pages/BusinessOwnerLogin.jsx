@@ -208,7 +208,7 @@ import { useState,useEffect } from "react"
 import { Link ,useNavigate} from "react-router-dom"
 import Header from "../components/Header"
 import { useSelector,useDispatch } from "react-redux"
-import {getPlaces,checkPlaceExist,clear} from '../features/businessOwnerPlaces/busOwnPlacesSlice'
+import {getPlaces,checkPlaceExist,clear,setGooglePlace} from '../features/businessOwnerPlaces/busOwnPlacesSlice'
 import PlacesList from '../components/PlacesList'
 import Modal from 'react-modal'
 import {TiBusinessCard} from 'react-icons/ti'
@@ -252,7 +252,9 @@ function BusinessOwnerLogin(){
     const openModal=()=> setModalIsOpen(true)
     const closeModal=()=> setModalIsOpen(false)
     
-   
+   useEffect(()=>{
+    dispatch(clear())
+   },[])
 
     const fetchPlaces=(e)=>{
         e.preventDefault()
@@ -286,6 +288,7 @@ function BusinessOwnerLogin(){
         
     }
     const onAdd=()=>{
+        dispatch(setGooglePlace(itemToAdd))
         navigate('/newplace')
     }
     if(isLoading){

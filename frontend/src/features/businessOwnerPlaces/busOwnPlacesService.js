@@ -25,10 +25,19 @@ const checkPlaceExist =async(googleId)=>{
 const clear =()=>{
     localStorage.removeItem('places')
 }
+//set google place in the state
+const setGooglePlace=(googlePlace)=>{
+    console.log(googlePlace)
+
+    localStorage.setItem('busOwnPlaces',JSON.stringify(googlePlace))
+    return googlePlace
+
+}
 
 const busOwnPlacesService={
     getPlaces,
     checkPlaceExist,
+    setGooglePlace,
     clear
 }
 
