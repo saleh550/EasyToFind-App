@@ -1,16 +1,19 @@
 import {GoogleMap,useLoadScript, MarkerF } from "@react-google-maps/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-function Map(){
-    const [position,setPosition]=useState({lat:null,lng:null})
+function Map({getLocation}){
+    const [position,setPosition]=useState({lat:32.255134,lng:35.186776})
+    useEffect(()=>{
+        getLocation(position)
+    },[position])
     const {isLoaded}=useLoadScript({
     googleMapsApiKey:process.env.REACT_APP_API_KEY
     })
     if(!isLoaded){
         return <h1>Loading ...</h1>
     }
-    // const [position,setPosition] =useState({lat:32.255134 ,lng:35.186776})
+    
     
     const onClick=(ev)=>{
      setPosition({

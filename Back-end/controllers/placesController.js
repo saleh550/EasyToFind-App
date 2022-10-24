@@ -57,21 +57,23 @@ try {
 //@route POST /api/maps/create/place
 //@access public
 const createPlace=asyncHandler(async(req,res)=>{
-  console.log(req.body.id)
+  
   const {
     google_id,
     email,
     password,
     name,
     phone,
+    opening_hours,
+    location,
     description,
     facebook_url,
     instagram_url,
     whatsapp_url,
-  }=req.body
+  }=req.body.formData
 
 
-  //check if the email exist in the data base
+  //check if the email exist in the places collection
   const emailExist=await Place.findOne({email:email})
   if(emailExist){
     res.status(400)
@@ -90,24 +92,12 @@ const createPlace=asyncHandler(async(req,res)=>{
     email:email,
     password:hashedPassword,
     phone:phone,
-    location:{
-      type: "Point",
-      coordinates: [-73.856077, 40.848447]
-    },
+    location:location,
     description:description,
     facebook_url:facebook_url,
     instagram_url:instagram_url,
     whatsapp_url:whatsapp_url,
-    opening_hours:[{
-      sun:{start:8.5,end:20.5},
-      mon:{start:8.5,end:20.5},
-      tue:{start:8.5,end:20.5},
-      wed:{start:8.5,end:20.5},
-      thu:{start:8.5,end:20.5},
-      fri:{start:8.5,end:20.5},
-      sat:{start:8.5,end:20.5},
-
-    }]
+    opening_hours:opening_hours
 
   }).then(place=>{
     if(place){

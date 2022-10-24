@@ -42,36 +42,43 @@ const placeSchema=mongoose.Schema({
     description:{
         type:String,
     },
-    opening_hours:[{
+    opening_hours:{
         sun: {
-            start: { type: Number, min: 0, max: 23 },
-            end: { type: Number, min: 0, max: 23 },
+            start:String ,
+            end:String ,
+            isOpen:Boolean
         },
         mon: {
-            start: { type: Number, min: 0, max: 23 },
-            end: { type: Number, min: 0, max: 23 },
+            start:String ,
+            end:String ,
+            isOpen:Boolean
         },
         tue: {
-            start: { type: Number, min: 0, max: 23 },
-            end: { type: Number, min: 0, max: 23 },
+            start:String ,
+            end:String ,
+            isOpen:Boolean
         },
         wed: {
-            start: { type: Number, min: 0, max: 23 },
-            end: { type: Number, min: 0, max: 23 },
+            start:String ,
+            end:String ,
+            isOpen:Boolean
         },
         thu: {
-            start: { type: Number, min: 0, max: 23 },
-            end: { type: Number, min: 0, max: 23 },
+            start:String ,
+            end:String ,
+            isOpen:Boolean
         },
         fri: {
-            start: { type: Number, min: 0, max: 23 },
-            end: { type: Number, min: 0, max: 23 },
+            start:String ,
+            end:String ,
+            isOpen:Boolean
         },
         sat: {
-            start: { type: Number, min: 0, max: 23 },
-            end: { type: Number, min: 0, max: 23 },
+            start:String ,
+            end:String ,
+            isOpen:Boolean
         },
-    }],
+    },
     facebook_url:{
         type:String,
         default:null

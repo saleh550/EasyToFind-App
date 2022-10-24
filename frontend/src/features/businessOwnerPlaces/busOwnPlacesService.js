@@ -33,12 +33,21 @@ const setGooglePlace=(googlePlace)=>{
     return googlePlace
 
 }
+//create place by business owner
+const createPlace= async(formData)=>{
+   
+    const response=await axios.post(API_URL+'/create/place',formData);
+    if(response.data){
+        localStorage.setItem('busOwnPlaces',JSON.stringify(response.data))
+    }
+    return response.data
+}
 
 const busOwnPlacesService={
     getPlaces,
     checkPlaceExist,
     setGooglePlace,
-    clear
+    clear,createPlace
 }
 
 export default busOwnPlacesService

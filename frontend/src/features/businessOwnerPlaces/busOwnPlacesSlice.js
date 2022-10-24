@@ -54,6 +54,20 @@ export const  setGooglePlace=createAsyncThunk('set/googlePlace',async (googlePla
 return await busOwnPlacesService.setGooglePlace(googlePlace)
 })
 
+//creat place by business owner
+export const createPlace=createAsyncThunk('create/place',async(formData,thunkAPI)=>{
+   
+    try{
+        return await busOwnPlacesService.createPlace(formData)
+        
+    }catch(error){
+        const message=(error.response&&error.response.data&&error.response.data.message)
+        ||error.message
+        ||error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 export const busOwnPlacesSlice=createSlice({
     name:'busOwnPlaces',
     initialState,
@@ -116,6 +130,21 @@ export const busOwnPlacesSlice=createSlice({
         .addCase(setGooglePlace.fulfilled,(state,action)=>{
             state.googlePlace=action.payload
         })
+        .addCase(createPlace.pending,(state)=>{
+            state.isLoading=true
+        })
+        .addCase(createPlace.fulfilled,(state,action)=>{
+            state.place=action.payload
+            state.isLoading=false
+            state.isSuccess=true
+        })
+        .addCase(createPlace.rejected,(state,action)=>{
+            state.place={}
+            state.isError=true
+            state.isLoading=false
+            state.message=action.payload
+        })
+        
         
        
     }
