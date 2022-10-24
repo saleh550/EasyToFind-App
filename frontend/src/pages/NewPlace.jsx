@@ -53,7 +53,8 @@ function NewPlace(){
         }
         if(isSuccess){
             toast.success("Place Added")
-            navigate('/')
+            dispatch(reset())
+           
         }
     },[location,setLocation,workingHours,setWorkingHours ,dispatch])
     const WorkingHours=(workHours)=>{
@@ -75,8 +76,19 @@ function NewPlace(){
         return
         }
         //check phone number 
-        if(formData.phone.length!==10){
-            toast.error('Phone Number have to contain 10 numbers')
+        if(formData.phone.length===10){
+            var i=0;
+            for( i=0;i<formData.phone.length;i++){
+               if(isNaN(formData.phone[i])){
+                toast.error("Phone number has failed , Make sure the number is correct ")
+                
+                return
+               }
+    
+            }
+        }else{
+            toast.error("Phone number has failed , Make sure it contains 10 digits ")
+            return
         }
         //check password 
         if(formData.password.length < 6){
@@ -85,7 +97,9 @@ function NewPlace(){
         }
         
         dispatch(createPlace({formData:formData}))
-        dispatch(reset())
+        
+        navigate('/')
+
             
 
     }
