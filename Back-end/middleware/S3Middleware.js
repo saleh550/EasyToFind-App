@@ -20,14 +20,14 @@ const upload=multer({
         s3:s3,
         
         metadata: function (req, file, cb) {
-          
+            
             cb(null, {
                 
               fieldName: file.fieldname
             });
           },
         key:(req,file,cb)=>{
-            cb(null,`profileImages/image-${Date.now()}-${req.params.id}.png`);//profileImage/.. ,that give the file path in the bucket s3
+            cb(null,`${file.fieldname}/image-${Date.now()}.png`);//profileImage/.. ,that give the file path in the bucket s3
         }
     })
 })

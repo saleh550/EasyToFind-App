@@ -42,12 +42,21 @@ const createPlace= async(formData)=>{
     }
     return response.data
 }
+//upload images to s3 and return ther url
+const uploadImages=async(fromdata)=>{
+    const response =await axios.post(API_URL+'/upload/images',fromdata);
+    if(response.data){
+        localStorage.setItem('busOwnPlaces',JSON.stringify(response.data))
+    }
+    return response.data
+}
 
 const busOwnPlacesService={
     getPlaces,
     checkPlaceExist,
     setGooglePlace,
-    clear,createPlace
+    clear,createPlace,
+    uploadImages
 }
 
 export default busOwnPlacesService

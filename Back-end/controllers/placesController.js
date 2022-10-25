@@ -132,9 +132,29 @@ const checkPlace=asyncHandler(async(req,res)=>{
   }
   
 })
+//@desc upload multi images to s3 and return ther url 
+//@route POST /api/maps/upload/images
+//@access public
+const uploadImages=asyncHandler(async(req,res)=>{
+const locationsUrl=[]
+try{
+  const files=req.files
+  files.map((file)=>{locationsUrl.push(file.location)})
+  if(!files){
+    res.status(400)
+    throw new Error("No images uploaded")
+  }
+  res.status(200).json(locationsUrl)
+}catch(error){
+  res.status(400)
+  throw new Error(error)
+}
+
+})
 
 module.exports={
     getPlaces,
     createPlace,
-    checkPlace
+    checkPlace,
+    uploadImages
 }

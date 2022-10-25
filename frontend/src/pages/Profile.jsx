@@ -158,7 +158,7 @@ const fileSelected = event => {
         }
         setImageSelected(false)
         const formdata=new FormData()
-        formdata.append('image',file)
+        formdata.append('profileImage',file)
         formdata.append('id',user._id)
 
         dispatch(uploadImage(formdata))

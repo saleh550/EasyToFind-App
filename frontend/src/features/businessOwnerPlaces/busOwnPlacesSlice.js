@@ -7,6 +7,7 @@ const initialState={
     places:[],
     place:{},
     googlePlace:{},
+    imagesUrl:[],
     isSuccess:false,
     isError:false,
     isLoading:false,
@@ -59,6 +60,19 @@ export const createPlace=createAsyncThunk('create/place',async(formData,thunkAPI
    
     try{
         return await busOwnPlacesService.createPlace(formData)
+        
+    }catch(error){
+        const message=(error.response&&error.response.data&&error.response.data.message)
+        ||error.message
+        ||error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//upload images to s3 and return ther url
+export const uploadImages=createAsyncThunk('upload/images',async(formdata,thunkAPI)=>{
+    try{
+        return await busOwnPlacesService.uploadImages(formdata)
         
     }catch(error){
         const message=(error.response&&error.response.data&&error.response.data.message)
@@ -143,6 +157,19 @@ export const busOwnPlacesSlice=createSlice({
             state.isError=true
             state.isLoading=false
             state.message=action.payload
+        })
+        .addCase(uploadImages.pending,(state)=>{
+            state.isLoading=true
+        })
+        .addCase(uploadImages.fulfilled,(state,action)=>{
+            state.isLoading=false
+            state.imagesUrl=action.payload
+        })
+        .addCase(uploadImages.rejected,(state,action)=>{
+            state.isLoading=false
+            state.message=action.payload
+            state.places=null
+            
         })
         
         

@@ -210,7 +210,7 @@ const changePassword=asyncHandler(async(req,res)=>{
 //@desc upload image to s3 bucket and save the url in the data base
 //@route post /api/users/upload/image/:id
 //@access private
-const uploadImage =asyncHandler(async(req,res)=>{
+const uploadImage =asyncHandler(async(req,res)=>{ 
     try{
         const imageMimeType=req.file.mimetype.split('/')[0]
          if(imageMimeType==="image"){

@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import {FcAddImage} from 'react-icons/fc'
 import {MdOutlineAddBusiness} from 'react-icons/md'
 import {TiArrowBackOutline} from 'react-icons/ti'
+import {BsImages} from 'react-icons/bs'
 import {toast} from 'react-toastify'
 import { useDispatch,useSelector } from "react-redux";
-import {createPlace,reset} from '../features/businessOwnerPlaces/busOwnPlacesSlice'
+import {createPlace,reset,uploadImages} from '../features/businessOwnerPlaces/busOwnPlacesSlice'
 
 function NewPlace(){
     const dispatch=useDispatch()
@@ -20,6 +21,7 @@ function NewPlace(){
         lat:null,
         lng:null
     })
+    const [images,setImages]=useState([])
     const [formData,setFormData]=useState({
         email:'',
         password:'',
@@ -38,7 +40,6 @@ function NewPlace(){
 
     })
     useEffect(()=>{
-        console.log(workingHours)
         setFormData((prevState)=>{
             return ({
                 ...prevState,
@@ -97,17 +98,32 @@ function NewPlace(){
         }
         
         dispatch(createPlace({formData:formData}))
-        
+        dispatch(reset())
         navigate('/')
 
             
 
     }
-    if(isLoading){
-        return <Spinner/>
+    const onChooseImages=(e)=>{
+        e.preventDefault()
+        const files=e.target.files
+        if(!files){
+            toast.warn("Something in selcet images is wrong ,try again")
+        }
+        setImages(files)
+        const formdata=new FormData()
+        for(var i=0;i<files.length;i++){
+            formdata.append('businessImages',files[i])
+        }
+        dispatch(uploadImages(formdata))
+        
     }
+    // if(isLoading){
+    //     return <Spinner/>
+    // }
     return(
         <>
+            {isLoading&& <Spinner/>}
             <div className="home-header">
                 <Header/>
                 <MdOutlineAddBusiness className="text-white-50 w-25 h-25"/>
@@ -157,10 +173,16 @@ function NewPlace(){
                         <OpeningHours WorkingHours={WorkingHours}/>
                     </div>
                    
-                    <div className="form-group  col-md-6 col-sm-2 " style={{"fontSize":"25px"}} >
+                    <div className="form-group  col-md-6 col-sm-2 "  >
                         <label>Add Images:</label>
-                        <FcAddImage className="icon w-25 h-50"/>
+                        <label style={{"fontSize":"30px"}}>
+                        <FcAddImage className="icon w-100 h-100"/>
+                        <input style={{"display":"none"}} onChange={onChooseImages} type='file' multiple accept="image/*"/>
+                        </label>
+                        {images.length>0?<p className="text-success">{images.length} Images Selected</p>:<p className="text-secondary"> No Selected Images Yet .</p>}
+                        
                     </div>
+                   
                     <div className="form-group  col-md-12 col-sm-2 " style={{"textAlign":"center"}} >
                         <button type="submit" className="btn btn-primary btn-success w-25 m-1">Add</button>
                         <button className="btn btn-primary btn-light w-25 m-1">Reset</button>
