@@ -57,7 +57,7 @@ try {
 //@route POST /api/maps/create/place
 //@access public
 const createPlace=asyncHandler(async(req,res)=>{
-  
+  console.log(req.body)
   const {
     google_id,
     email,
@@ -70,6 +70,7 @@ const createPlace=asyncHandler(async(req,res)=>{
     facebook_url,
     instagram_url,
     whatsapp_url,
+    images,
   }=req.body.formData
 
 
@@ -87,7 +88,7 @@ const createPlace=asyncHandler(async(req,res)=>{
 
   //create new place
   const place= Place.create({
-    google_id:google_id,
+    google_id:'ChIJTfgZSzAuHBURWu4EEdb2B2o',
     name:name, 
     email:email,
     password:hashedPassword,
@@ -97,7 +98,8 @@ const createPlace=asyncHandler(async(req,res)=>{
     facebook_url:facebook_url,
     instagram_url:instagram_url,
     whatsapp_url:whatsapp_url,
-    opening_hours:opening_hours
+    opening_hours:opening_hours,
+    images:images
 
   }).then(place=>{
     if(place){

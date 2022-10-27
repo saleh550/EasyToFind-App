@@ -148,7 +148,7 @@ export const busOwnPlacesSlice=createSlice({
             state.isLoading=true
         })
         .addCase(createPlace.fulfilled,(state,action)=>{
-            state.place=action.payload
+            state.place=action.payload 
             state.isLoading=false
             state.isSuccess=true
         })

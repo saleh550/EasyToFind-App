@@ -91,9 +91,7 @@ const placeSchema=mongoose.Schema({
         type:String,
         default:null
     },
-    images:[{
-        url:String
-    }]
+    images:[]
 
 },{timestamp:true})
 

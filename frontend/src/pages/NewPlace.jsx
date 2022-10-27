@@ -15,7 +15,7 @@ import {createPlace,reset,uploadImages} from '../features/businessOwnerPlaces/bu
 function NewPlace(){
     const dispatch=useDispatch()
     const navigate=useNavigate()
-    const {isLoading,isError,place,message,isSuccess}=useSelector(state=>state.busOwnPlaces)
+    const {isLoading,isError,place,message,isSuccess,imagesUrl}=useSelector(state=>state.busOwnPlaces)
     const [workingHours,setWorkingHours]=useState()
     const [location,setLocation]=useState({
         lat:null,
@@ -34,30 +34,25 @@ function NewPlace(){
         opening_hours:null,
         location:{
             type: "Point",
-            coordinates: [null,null]
+            coordinates: [0,0]
           },
+        images:[]
         
 
     })
     useEffect(()=>{
-        setFormData((prevState)=>{
-            return ({
-                ...prevState,
-                opening_hours:workingHours,
-                location:{...prevState.location,coordinates:[location.lat,location.lng]},
-                
-            })
-            
-        })
+       
         if(isError){
             toast.error(message)
         }
-        if(isSuccess){
-            toast.success("Place Added")
-            dispatch(reset())
+        if(isSuccess && Object.keys(place).length>0){ 
+        navigate('/business/owner')
            
         }
-    },[location,setLocation,workingHours,setWorkingHours ,dispatch])
+        dispatch(reset())
+        
+
+    },[dispatch,navigate,isError,isSuccess,place,message,imagesUrl])
     const WorkingHours=(workHours)=>{
         setWorkingHours(workHours)
     }
@@ -65,6 +60,7 @@ function NewPlace(){
         setLocation(loc)
     }
     const onSubmit=(e)=>{
+       
         e.preventDefault()
         //check if all details fill In
         if(
@@ -96,10 +92,26 @@ function NewPlace(){
             toast.error("Password should contain 6 letters/numbers or more")
             return
         }
+        setFormData((prevState)=>{
+            return ({
+                ...prevState,
+                images:imagesUrl,
+                opening_hours:workingHours,
+                location:{
+                    type: "Point",
+                    coordinates: [location.lat,location.lng]
+                  },
+                
+            })
+            
+        })
+        
+
         
         dispatch(createPlace({formData:formData}))
-        dispatch(reset())
-        navigate('/')
+        // dispatch(reset())
+       
+        
 
             
 
@@ -118,9 +130,6 @@ function NewPlace(){
         dispatch(uploadImages(formdata))
         
     }
-    // if(isLoading){
-    //     return <Spinner/>
-    // }
     return(
         <>
             {isLoading&& <Spinner/>}
@@ -179,21 +188,18 @@ function NewPlace(){
                         <FcAddImage className="icon w-100 h-100"/>
                         <input style={{"display":"none"}} onChange={onChooseImages} type='file' multiple accept="image/*"/>
                         </label>
-                        {images.length>0?<p className="text-success">{images.length} Images Selected</p>:<p className="text-secondary"> No Selected Images Yet .</p>}
+                        {imagesUrl.length>0?<p className="text-success">{imagesUrl.length} Images Uploaded</p>:<p className="text-secondary"> No Selected Images Yet .</p>}
                         
                     </div>
+                    
+
                    
                     <div className="form-group  col-md-12 col-sm-2 " style={{"textAlign":"center"}} >
                         <button type="submit" className="btn btn-primary btn-success w-25 m-1">Add</button>
                         <button className="btn btn-primary btn-light w-25 m-1">Reset</button>
 
                     </div>
-                    
-                    
-
                 </div>
-                
-                
                 </form>
             </div>
         </>

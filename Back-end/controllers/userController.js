@@ -209,10 +209,10 @@ const changePassword=asyncHandler(async(req,res)=>{
 
 //@desc upload image to s3 bucket and save the url in the data base
 //@route post /api/users/upload/image/:id
-//@access private
+//@access private 
 const uploadImage =asyncHandler(async(req,res)=>{ 
     try{
-        const imageMimeType=req.file.mimetype.split('/')[0]
+        const imageMimeType=req.file.mimetype.split('/')[0]  
          if(imageMimeType==="image"){
         const dataUpdated=await User.findByIdAndUpdate(req.params.id,{imageUrl:req.file.location},{new:true})
         console.log(dataUpdated)
@@ -240,8 +240,8 @@ const uploadImage =asyncHandler(async(req,res)=>{
 
 module.exports={
     registrUser, 
-    loginUser,
-    loginWithGoogle,
+    loginUser, 
+    loginWithGoogle,   
     getMe,
     changePassword,
     updateUser,
