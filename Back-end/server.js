@@ -1,3 +1,4 @@
+const path =require('path')
 const express=require('express')
 const dotenv=require('dotenv').config()
 const colors=require('colors')
@@ -38,9 +39,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 
-app.get('/',(req,res)=>{
-    res.status(200).json({message:'Hello world!'})
-})
+
 
 
 
@@ -61,6 +60,16 @@ app.get('/',(req,res)=>{
 //Routes
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/maps',require('./routes/palcesRoutes'))
+
+if(process.env.NODE_ENV==='production'){
+    app.use(express.static(path.join(__dirname,'../frontend')))
+
+    app.get('*',(req,res)=>res.sendFile(__dirname,'../','frontend','build','index.html'))
+}else{
+    app.get('/',(req,res)=>{
+        res.status(200).json({message:'Welcome to the EasytoFind API!'})
+    })
+}
 
 
 app.use(errorHandler)
