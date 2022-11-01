@@ -8,7 +8,7 @@ import PlaceItem from '../components/PlaceItem'
 import coers from 'cors'
 import { useEffect } from 'react'
 import axios from 'axios'
-import {getPlaces} from '../features/places/placesSlice'
+import {getPlaces,getExistPlaces} from '../features/places/placesSlice'
 import NotFoundPlaces from '../components/NotFoundPlaces'
 import PlacesList from '../components/PlacesList'
 import Spinner from '../components/Spinner'
@@ -16,7 +16,7 @@ import Spinner from '../components/Spinner'
 
 function Home(){
     const {user}=useSelector(state=>state.auth)
-   const {places,isLoading}=useSelector(state=>state.places)
+   const {places,places2,isLoading}=useSelector(state=>state.places)
     const dispatch=useDispatch()
     const navigate=useNavigate()
     const [textSearch,setTextSearch]=useState("")
@@ -28,6 +28,7 @@ function Home(){
         e.preventDefault()
         console.log(textSearch)
      dispatch(getPlaces({textSearch:textSearch}))
+     dispatch(getExistPlaces({textSearch:textSearch}))
    
     } 
     
@@ -81,7 +82,11 @@ function Home(){
             </section>   
         </header>
         {places.length!==0?(
+            <>
+                <PlacesList places={places2}/>
                 <PlacesList places={places}/>
+            </>
+                
                 ):(
                 <NotFoundPlaces/>)} 
         </div>  

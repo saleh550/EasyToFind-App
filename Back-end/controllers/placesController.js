@@ -8,7 +8,26 @@ const fs =require('fs')
 const e = require('express')
 const { findOne } = require('../models/placeModel')
 
+//@desc get places from mongo (database) that added by business owner
+//@route GET /api/maps/get/places
+//@access public
+const getCurrentPlaces=asyncHandler(async(req,res)=>{
+  
+  try {
+    let placesData=[];
+    
+    const result =await Place.find({name:{ $regex:new RegExp(req.body.textSearch)}})
+    console.log(result)
+  res.status(200).json(result)
 
+  } catch (error) {
+    res.status(500)
+    throw new Error("Somthing Is Wrong!")
+    
+  }
+  
+
+})
 
 //@desc get places from google maps
 //@route GET /api/maps/places
@@ -158,5 +177,6 @@ module.exports={
     getPlaces,
     createPlace,
     checkPlace,
-    uploadImages
+    uploadImages,
+    getCurrentPlaces
 }

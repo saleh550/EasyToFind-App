@@ -5,6 +5,7 @@ import placesService from './placesService'
 const initialState={ 
     
     places:[],
+    places2:[],
     place:{},
     isSuccess:false,
     isError:false,
@@ -12,7 +13,18 @@ const initialState={
     message:''
 }
 
-
+//get places from mongo (database ) that added by business owner by text search
+export const getExistPlaces=createAsyncThunk('exist/places',async(textSearch,thunkAPI)=>{
+    try{
+        return await placesService.getExistPlaces(textSearch)
+        
+    }catch(error){
+        const message=(error.response&&error.response.data&&error.response.data.message)
+        ||error.message
+        ||error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 //get places from google maps api by text search
 export const getPlaces=createAsyncThunk('places/get',async(textSearch,thunkAPI)=>{
     
@@ -84,6 +96,21 @@ export const placesSlice=createSlice({
             state.isError=true
             state.message=action.payload
             state.place=null
+            
+        })
+        .addCase(getExistPlaces.pending,(state)=>{
+            state.isLoading=true
+        })
+        .addCase(getExistPlaces.fulfilled,(state,action)=>{
+            state.isLoading=false
+            state.isSuccess=true
+            state.places2=action.payload
+        })
+        .addCase(getExistPlaces.rejected,(state,action)=>{
+            state.isLoading=false
+            state.isError=true
+            state.message=action.payload
+            state.places=null
             
         })
     }
